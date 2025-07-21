@@ -3,9 +3,9 @@ ThisBuild / organization := "org.codeminers"
 ThisBuild / scalaVersion := "3.5.2"
 
 // parsed by project/Versions.scala, updated by updateDependencies.sh
-val cpgVersion       = "1.7.26"
-val joernVersion     = "4.0.250"
-val flatgraphVersion = "0.1.9"
+val cpgVersion       = "1.7.44"
+val joernVersion     = "4.0.397"
+val flatgraphVersion = "0.1.24"
 
 lazy val schema         = Projects.schema
 lazy val domainClasses  = Projects.domainClasses
