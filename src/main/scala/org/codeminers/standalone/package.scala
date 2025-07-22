@@ -25,7 +25,7 @@ package object standalone {
 
   @Traversal(elementType = classOf[Method])
   implicit class CustomMethodSteps(val traversal: Iterator[Method]) extends AnyVal {
-    @Doc("custom step on method as an example", "a veeery long description again")
+    @Doc(info = "custom step on method as an example", longInfo = "a veeery long description again")
     def customMethodStep: Iterator[String] =
       traversal.flatMap(_.parameter.name)
   }
@@ -38,7 +38,7 @@ package object standalone {
   /** Example of custom node type starters */
   @TraversalSource
   class StandaloneStarters(cpg: Cpg) {
-    @Doc("custom starter step as an example", "a veeery long description")
+    @Doc(info = "custom starter step as an example", longInfo = "a veeery long description")
     def customStarterStep: Iterator[String] =
       cpg.method.parameter.name
   }
