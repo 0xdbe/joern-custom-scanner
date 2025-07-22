@@ -1,6 +1,6 @@
 name                     := "standalone"
 ThisBuild / organization := "org.codeminers"
-ThisBuild / scalaVersion := "3.5.2"
+ThisBuild / scalaVersion := "3.6.4"
 
 // parsed by project/Versions.scala, updated by updateDependencies.sh
 val cpgVersion       = "1.7.44"
