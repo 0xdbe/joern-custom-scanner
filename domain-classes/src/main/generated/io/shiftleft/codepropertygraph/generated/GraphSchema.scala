@@ -27,7 +27,6 @@ object GraphSchema extends flatgraph.Schema {
     "KEY_VALUE_PAIR",
     "LITERAL",
     "LOCAL",
-    "LOCATION",
     "MEMBER",
     "META_DATA",
     "METHOD",
@@ -128,7 +127,6 @@ object GraphSchema extends flatgraph.Schema {
     (g, seq) => new nodes.KeyValuePair(g, seq),
     (g, seq) => new nodes.Literal(g, seq),
     (g, seq) => new nodes.Local(g, seq),
-    (g, seq) => new nodes.Location(g, seq),
     (g, seq) => new nodes.Member(g, seq),
     (g, seq) => new nodes.MetaData(g, seq),
     (g, seq) => new nodes.Method(g, seq),
@@ -186,11 +184,9 @@ object GraphSchema extends flatgraph.Schema {
     size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
-    size => new Array[String](size),
-    size => new Array[String](size),
-    size => new Array[String](size),
     size => new Array[Int](size),
     size => new Array[Int](size),
+    size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
@@ -219,13 +215,9 @@ object GraphSchema extends flatgraph.Schema {
     size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
-    size => new Array[String](size),
-    size => new Array[String](size),
     size => new Array[Int](size),
     size => new Array[Int](size),
     size => new Array[Int](size),
-    size => new Array[String](size),
-    size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
     size => new Array[String](size),
@@ -247,10 +239,7 @@ object GraphSchema extends flatgraph.Schema {
     "AST_PARENT_FULL_NAME",
     "AST_PARENT_TYPE",
     "CANONICAL_NAME",
-    "CLASS_NAME",
-    "CLASS_SHORT_NAME",
     "CLOSURE_BINDING_ID",
-    "CLOSURE_ORIGINAL_NAME",
     "CODE",
     "COLUMN_NUMBER",
     "COLUMN_NUMBER_END",
@@ -261,6 +250,7 @@ object GraphSchema extends flatgraph.Schema {
     "DISPATCH_TYPE",
     "DYNAMIC_TYPE_HINT_FULL_NAME",
     "EVALUATION_STRATEGY",
+    "EVIDENCE_DESCRIPTION",
     "EXPLICIT_AS",
     "FILENAME",
     "FULL_NAME",
@@ -279,985 +269,1140 @@ object GraphSchema extends flatgraph.Schema {
     "LINE_NUMBER",
     "LINE_NUMBER_END",
     "METHOD_FULL_NAME",
-    "METHOD_SHORT_NAME",
     "MODIFIER_TYPE",
     "MYPROPERTY",
     "NAME",
-    "NODE_LABEL",
     "OFFSET",
     "OFFSET_END",
     "ORDER",
     "OVERLAYS",
-    "PACKAGE_NAME",
     "PARSER_TYPE_NAME",
     "POSSIBLE_TYPES",
     "ROOT",
     "SIGNATURE",
-    "SYMBOL",
     "TYPE_DECL_FULL_NAME",
     "TYPE_FULL_NAME",
     "VALUE",
     "VERSION"
   )
   val nodePropertyByLabel = normalNodePropertyNames.zipWithIndex.toMap
-    .updated("evidence", 57)
-    .updated("keyValuePairs", 58)
-    .updated("node", 59)
-    .updated("tag", 60)
+    .updated("evidence", 51)
+    .updated("keyValuePairs", 52)
+    .updated("node", 53)
+    .updated("tag", 54)
   val nodePropertyDescriptors: Array[FormalQtyType.FormalQuantity | FormalQtyType.FormalType] = {
-    val nodePropertyDescriptors = new Array[FormalQtyType.FormalQuantity | FormalQtyType.FormalType](5490)
-    for (idx <- Range(0, 5490)) {
+    val nodePropertyDescriptors = new Array[FormalQtyType.FormalQuantity | FormalQtyType.FormalType](4840)
+    for (idx <- Range(0, 4840)) {
       nodePropertyDescriptors(idx) =
         if ((idx & 1) == 0) FormalQtyType.NothingType
         else FormalQtyType.QtyNone
     }
 
-    nodePropertyDescriptors(90) = FormalQtyType.IntType // ANNOTATION.ARGUMENT_INDEX
-    nodePropertyDescriptors(91) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(180) = FormalQtyType.StringType // ANNOTATION.ARGUMENT_NAME
-    nodePropertyDescriptors(181) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(900) = FormalQtyType.StringType // ANNOTATION.CODE
-    nodePropertyDescriptors(901) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(990) = FormalQtyType.IntType // ANNOTATION.COLUMN_NUMBER
-    nodePropertyDescriptors(991) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1980) = FormalQtyType.StringType // ANNOTATION.FULL_NAME
-    nodePropertyDescriptors(1981) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3150) = FormalQtyType.IntType // ANNOTATION.LINE_NUMBER
-    nodePropertyDescriptors(3151) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3690) = FormalQtyType.StringType // ANNOTATION.NAME
-    nodePropertyDescriptors(3691) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4050) = FormalQtyType.IntType // ANNOTATION.ORDER
-    nodePropertyDescriptors(4051) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(92) = FormalQtyType.IntType // ANNOTATION_LITERAL.ARGUMENT_INDEX
-    nodePropertyDescriptors(93) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(182) = FormalQtyType.StringType // ANNOTATION_LITERAL.ARGUMENT_NAME
-    nodePropertyDescriptors(183) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(902) = FormalQtyType.StringType // ANNOTATION_LITERAL.CODE
-    nodePropertyDescriptors(903) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(992) = FormalQtyType.IntType // ANNOTATION_LITERAL.COLUMN_NUMBER
-    nodePropertyDescriptors(993) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3152) = FormalQtyType.IntType // ANNOTATION_LITERAL.LINE_NUMBER
-    nodePropertyDescriptors(3153) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3692) = FormalQtyType.StringType // ANNOTATION_LITERAL.NAME
-    nodePropertyDescriptors(3693) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4052) = FormalQtyType.IntType // ANNOTATION_LITERAL.ORDER
-    nodePropertyDescriptors(4053) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(904) = FormalQtyType.StringType // ANNOTATION_PARAMETER.CODE
-    nodePropertyDescriptors(905) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(994) = FormalQtyType.IntType // ANNOTATION_PARAMETER.COLUMN_NUMBER
-    nodePropertyDescriptors(995) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3154) = FormalQtyType.IntType // ANNOTATION_PARAMETER.LINE_NUMBER
-    nodePropertyDescriptors(3155) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4054) = FormalQtyType.IntType // ANNOTATION_PARAMETER.ORDER
-    nodePropertyDescriptors(4055) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(906) = FormalQtyType.StringType // ANNOTATION_PARAMETER_ASSIGN.CODE
-    nodePropertyDescriptors(907) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(996) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.COLUMN_NUMBER
-    nodePropertyDescriptors(997) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3156) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.LINE_NUMBER
-    nodePropertyDescriptors(3157) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4056) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.ORDER
-    nodePropertyDescriptors(4057) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(98) = FormalQtyType.IntType // ARRAY_INITIALIZER.ARGUMENT_INDEX
-    nodePropertyDescriptors(99) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(188) = FormalQtyType.StringType // ARRAY_INITIALIZER.ARGUMENT_NAME
-    nodePropertyDescriptors(189) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(908) = FormalQtyType.StringType // ARRAY_INITIALIZER.CODE
-    nodePropertyDescriptors(909) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(998) = FormalQtyType.IntType // ARRAY_INITIALIZER.COLUMN_NUMBER
-    nodePropertyDescriptors(999) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3158) = FormalQtyType.IntType // ARRAY_INITIALIZER.LINE_NUMBER
-    nodePropertyDescriptors(3159) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4058) = FormalQtyType.IntType // ARRAY_INITIALIZER.ORDER
-    nodePropertyDescriptors(4059) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3340) = FormalQtyType.StringType // BINDING.METHOD_FULL_NAME
-    nodePropertyDescriptors(3341) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3700) = FormalQtyType.StringType // BINDING.NAME
-    nodePropertyDescriptors(3701) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4600) = FormalQtyType.StringType // BINDING.SIGNATURE
-    nodePropertyDescriptors(4601) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(102) = FormalQtyType.IntType // BLOCK.ARGUMENT_INDEX
-    nodePropertyDescriptors(103) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(192) = FormalQtyType.StringType // BLOCK.ARGUMENT_NAME
-    nodePropertyDescriptors(193) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(912) = FormalQtyType.StringType // BLOCK.CODE
-    nodePropertyDescriptors(913) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1002) = FormalQtyType.IntType // BLOCK.COLUMN_NUMBER
-    nodePropertyDescriptors(1003) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1632) = FormalQtyType.StringType // BLOCK.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1633) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3162) = FormalQtyType.IntType // BLOCK.LINE_NUMBER
-    nodePropertyDescriptors(3163) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4062) = FormalQtyType.IntType // BLOCK.ORDER
-    nodePropertyDescriptors(4063) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4422) = FormalQtyType.StringType // BLOCK.POSSIBLE_TYPES
-    nodePropertyDescriptors(4423) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4872) = FormalQtyType.StringType // BLOCK.TYPE_FULL_NAME
-    nodePropertyDescriptors(4873) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(104) = FormalQtyType.IntType // CALL.ARGUMENT_INDEX
-    nodePropertyDescriptors(105) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(194) = FormalQtyType.StringType // CALL.ARGUMENT_NAME
-    nodePropertyDescriptors(195) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(914) = FormalQtyType.StringType // CALL.CODE
-    nodePropertyDescriptors(915) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1004) = FormalQtyType.IntType // CALL.COLUMN_NUMBER
-    nodePropertyDescriptors(1005) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1544) = FormalQtyType.StringType // CALL.DISPATCH_TYPE
-    nodePropertyDescriptors(1545) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1634) = FormalQtyType.StringType // CALL.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1635) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3164) = FormalQtyType.IntType // CALL.LINE_NUMBER
-    nodePropertyDescriptors(3165) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3344) = FormalQtyType.StringType // CALL.METHOD_FULL_NAME
+    nodePropertyDescriptors(88) = FormalQtyType.IntType // ANNOTATION.ARGUMENT_INDEX
+    nodePropertyDescriptors(89) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(176) = FormalQtyType.StringType // ANNOTATION.ARGUMENT_NAME
+    nodePropertyDescriptors(177) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(616) = FormalQtyType.StringType // ANNOTATION.CODE
+    nodePropertyDescriptors(617) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(704) = FormalQtyType.IntType // ANNOTATION.COLUMN_NUMBER
+    nodePropertyDescriptors(705) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1760) = FormalQtyType.StringType // ANNOTATION.FULL_NAME
+    nodePropertyDescriptors(1761) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2904) = FormalQtyType.IntType // ANNOTATION.LINE_NUMBER
+    nodePropertyDescriptors(2905) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3344) = FormalQtyType.StringType // ANNOTATION.NAME
     nodePropertyDescriptors(3345) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3704) = FormalQtyType.StringType // CALL.NAME
-    nodePropertyDescriptors(3705) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4064) = FormalQtyType.IntType // CALL.ORDER
-    nodePropertyDescriptors(4065) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4424) = FormalQtyType.StringType // CALL.POSSIBLE_TYPES
-    nodePropertyDescriptors(4425) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4604) = FormalQtyType.StringType // CALL.SIGNATURE
-    nodePropertyDescriptors(4605) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4874) = FormalQtyType.StringType // CALL.TYPE_FULL_NAME
-    nodePropertyDescriptors(4875) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(736) = FormalQtyType.StringType // CLOSURE_BINDING.CLOSURE_BINDING_ID
-    nodePropertyDescriptors(737) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(826) = FormalQtyType.StringType // CLOSURE_BINDING.CLOSURE_ORIGINAL_NAME
-    nodePropertyDescriptors(827) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1726) = FormalQtyType.StringType // CLOSURE_BINDING.EVALUATION_STRATEGY
-    nodePropertyDescriptors(1727) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(918) = FormalQtyType.StringType // COMMENT.CODE
-    nodePropertyDescriptors(919) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1008) = FormalQtyType.IntType // COMMENT.COLUMN_NUMBER
-    nodePropertyDescriptors(1009) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1908) = FormalQtyType.StringType // COMMENT.FILENAME
-    nodePropertyDescriptors(1909) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3168) = FormalQtyType.IntType // COMMENT.LINE_NUMBER
-    nodePropertyDescriptors(3169) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4068) = FormalQtyType.IntType // COMMENT.ORDER
-    nodePropertyDescriptors(4069) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1280) = FormalQtyType.StringType // CONFIG_FILE.CONTENT
-    nodePropertyDescriptors(1281) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3710) = FormalQtyType.StringType // CONFIG_FILE.NAME
-    nodePropertyDescriptors(3711) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(112) = FormalQtyType.IntType // CONTROL_STRUCTURE.ARGUMENT_INDEX
-    nodePropertyDescriptors(113) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(202) = FormalQtyType.StringType // CONTROL_STRUCTURE.ARGUMENT_NAME
-    nodePropertyDescriptors(203) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(922) = FormalQtyType.StringType // CONTROL_STRUCTURE.CODE
-    nodePropertyDescriptors(923) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1012) = FormalQtyType.IntType // CONTROL_STRUCTURE.COLUMN_NUMBER
-    nodePropertyDescriptors(1013) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1372) = FormalQtyType.StringType // CONTROL_STRUCTURE.CONTROL_STRUCTURE_TYPE
-    nodePropertyDescriptors(1373) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3172) = FormalQtyType.IntType // CONTROL_STRUCTURE.LINE_NUMBER
-    nodePropertyDescriptors(3173) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4072) = FormalQtyType.IntType // CONTROL_STRUCTURE.ORDER
-    nodePropertyDescriptors(4073) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4342) = FormalQtyType.StringType // CONTROL_STRUCTURE.PARSER_TYPE_NAME
-    nodePropertyDescriptors(4343) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1464) = FormalQtyType.StringType // DEPENDENCY.DEPENDENCY_GROUP_ID
-    nodePropertyDescriptors(1465) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3714) = FormalQtyType.StringType // DEPENDENCY.NAME
-    nodePropertyDescriptors(3715) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5064) = FormalQtyType.StringType // DEPENDENCY.VERSION
-    nodePropertyDescriptors(5065) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(116) = FormalQtyType.IntType // FIELD_IDENTIFIER.ARGUMENT_INDEX
-    nodePropertyDescriptors(117) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(206) = FormalQtyType.StringType // FIELD_IDENTIFIER.ARGUMENT_NAME
-    nodePropertyDescriptors(207) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(476) = FormalQtyType.StringType // FIELD_IDENTIFIER.CANONICAL_NAME
-    nodePropertyDescriptors(477) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(926) = FormalQtyType.StringType // FIELD_IDENTIFIER.CODE
-    nodePropertyDescriptors(927) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1016) = FormalQtyType.IntType // FIELD_IDENTIFIER.COLUMN_NUMBER
-    nodePropertyDescriptors(1017) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3176) = FormalQtyType.IntType // FIELD_IDENTIFIER.LINE_NUMBER
-    nodePropertyDescriptors(3177) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4076) = FormalQtyType.IntType // FIELD_IDENTIFIER.ORDER
-    nodePropertyDescriptors(4077) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(928) = FormalQtyType.StringType // FILE.CODE
-    nodePropertyDescriptors(929) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1018) = FormalQtyType.IntType // FILE.COLUMN_NUMBER
-    nodePropertyDescriptors(1019) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1288) = FormalQtyType.StringType // FILE.CONTENT
-    nodePropertyDescriptors(1289) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2188) = FormalQtyType.StringType // FILE.HASH
-    nodePropertyDescriptors(2189) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3178) = FormalQtyType.IntType // FILE.LINE_NUMBER
-    nodePropertyDescriptors(3179) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3718) = FormalQtyType.StringType // FILE.NAME
-    nodePropertyDescriptors(3719) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4078) = FormalQtyType.IntType // FILE.ORDER
-    nodePropertyDescriptors(4079) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5160) = FormalQtyType.RefType // FINDING.evidence
-    nodePropertyDescriptors(5161) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(5250) = FormalQtyType.RefType // FINDING.keyValuePairs
-    nodePropertyDescriptors(5251) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(122) = FormalQtyType.IntType // IDENTIFIER.ARGUMENT_INDEX
-    nodePropertyDescriptors(123) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(212) = FormalQtyType.StringType // IDENTIFIER.ARGUMENT_NAME
-    nodePropertyDescriptors(213) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(932) = FormalQtyType.StringType // IDENTIFIER.CODE
-    nodePropertyDescriptors(933) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1022) = FormalQtyType.IntType // IDENTIFIER.COLUMN_NUMBER
-    nodePropertyDescriptors(1023) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1652) = FormalQtyType.StringType // IDENTIFIER.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1653) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3182) = FormalQtyType.IntType // IDENTIFIER.LINE_NUMBER
-    nodePropertyDescriptors(3183) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3722) = FormalQtyType.StringType // IDENTIFIER.NAME
-    nodePropertyDescriptors(3723) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4082) = FormalQtyType.IntType // IDENTIFIER.ORDER
-    nodePropertyDescriptors(4083) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4442) = FormalQtyType.StringType // IDENTIFIER.POSSIBLE_TYPES
-    nodePropertyDescriptors(4443) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4892) = FormalQtyType.StringType // IDENTIFIER.TYPE_FULL_NAME
-    nodePropertyDescriptors(4893) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(934) = FormalQtyType.StringType // IMPORT.CODE
-    nodePropertyDescriptors(935) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1024) = FormalQtyType.IntType // IMPORT.COLUMN_NUMBER
-    nodePropertyDescriptors(1025) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1834) = FormalQtyType.BoolType // IMPORT.EXPLICIT_AS
-    nodePropertyDescriptors(1835) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(2284) = FormalQtyType.StringType // IMPORT.IMPORTED_AS
-    nodePropertyDescriptors(2285) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(2374) = FormalQtyType.StringType // IMPORT.IMPORTED_ENTITY
-    nodePropertyDescriptors(2375) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(2644) = FormalQtyType.BoolType // IMPORT.IS_EXPLICIT
-    nodePropertyDescriptors(2645) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(2914) = FormalQtyType.BoolType // IMPORT.IS_WILDCARD
-    nodePropertyDescriptors(2915) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3184) = FormalQtyType.IntType // IMPORT.LINE_NUMBER
-    nodePropertyDescriptors(3185) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4084) = FormalQtyType.IntType // IMPORT.ORDER
-    nodePropertyDescriptors(4085) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(936) = FormalQtyType.StringType // JUMP_LABEL.CODE
-    nodePropertyDescriptors(937) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1026) = FormalQtyType.IntType // JUMP_LABEL.COLUMN_NUMBER
-    nodePropertyDescriptors(1027) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3186) = FormalQtyType.IntType // JUMP_LABEL.LINE_NUMBER
-    nodePropertyDescriptors(3187) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3726) = FormalQtyType.StringType // JUMP_LABEL.NAME
-    nodePropertyDescriptors(3727) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4086) = FormalQtyType.IntType // JUMP_LABEL.ORDER
-    nodePropertyDescriptors(4087) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4356) = FormalQtyType.StringType // JUMP_LABEL.PARSER_TYPE_NAME
-    nodePropertyDescriptors(4357) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(128) = FormalQtyType.IntType // JUMP_TARGET.ARGUMENT_INDEX
-    nodePropertyDescriptors(129) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(938) = FormalQtyType.StringType // JUMP_TARGET.CODE
-    nodePropertyDescriptors(939) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1028) = FormalQtyType.IntType // JUMP_TARGET.COLUMN_NUMBER
-    nodePropertyDescriptors(1029) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3188) = FormalQtyType.IntType // JUMP_TARGET.LINE_NUMBER
-    nodePropertyDescriptors(3189) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3728) = FormalQtyType.StringType // JUMP_TARGET.NAME
-    nodePropertyDescriptors(3729) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4088) = FormalQtyType.IntType // JUMP_TARGET.ORDER
-    nodePropertyDescriptors(4089) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4358) = FormalQtyType.StringType // JUMP_TARGET.PARSER_TYPE_NAME
-    nodePropertyDescriptors(4359) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3010) = FormalQtyType.StringType // KEY_VALUE_PAIR.KEY
-    nodePropertyDescriptors(3011) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4990) = FormalQtyType.StringType // KEY_VALUE_PAIR.VALUE
-    nodePropertyDescriptors(4991) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(132) = FormalQtyType.IntType // LITERAL.ARGUMENT_INDEX
-    nodePropertyDescriptors(133) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(222) = FormalQtyType.StringType // LITERAL.ARGUMENT_NAME
-    nodePropertyDescriptors(223) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(942) = FormalQtyType.StringType // LITERAL.CODE
-    nodePropertyDescriptors(943) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1032) = FormalQtyType.IntType // LITERAL.COLUMN_NUMBER
-    nodePropertyDescriptors(1033) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1662) = FormalQtyType.StringType // LITERAL.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1663) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3192) = FormalQtyType.IntType // LITERAL.LINE_NUMBER
-    nodePropertyDescriptors(3193) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4092) = FormalQtyType.IntType // LITERAL.ORDER
-    nodePropertyDescriptors(4093) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4452) = FormalQtyType.StringType // LITERAL.POSSIBLE_TYPES
-    nodePropertyDescriptors(4453) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4902) = FormalQtyType.StringType // LITERAL.TYPE_FULL_NAME
-    nodePropertyDescriptors(4903) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(764) = FormalQtyType.StringType // LOCAL.CLOSURE_BINDING_ID
-    nodePropertyDescriptors(765) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(944) = FormalQtyType.StringType // LOCAL.CODE
-    nodePropertyDescriptors(945) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1034) = FormalQtyType.IntType // LOCAL.COLUMN_NUMBER
-    nodePropertyDescriptors(1035) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1664) = FormalQtyType.StringType // LOCAL.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1665) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(2114) = FormalQtyType.StringType // LOCAL.GENERIC_SIGNATURE
-    nodePropertyDescriptors(2115) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3194) = FormalQtyType.IntType // LOCAL.LINE_NUMBER
-    nodePropertyDescriptors(3195) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3734) = FormalQtyType.StringType // LOCAL.NAME
-    nodePropertyDescriptors(3735) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4094) = FormalQtyType.IntType // LOCAL.ORDER
-    nodePropertyDescriptors(4095) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4454) = FormalQtyType.StringType // LOCAL.POSSIBLE_TYPES
-    nodePropertyDescriptors(4455) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4904) = FormalQtyType.StringType // LOCAL.TYPE_FULL_NAME
-    nodePropertyDescriptors(4905) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(586) = FormalQtyType.StringType // LOCATION.CLASS_NAME
-    nodePropertyDescriptors(587) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(676) = FormalQtyType.StringType // LOCATION.CLASS_SHORT_NAME
-    nodePropertyDescriptors(677) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1936) = FormalQtyType.StringType // LOCATION.FILENAME
-    nodePropertyDescriptors(1937) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3196) = FormalQtyType.IntType // LOCATION.LINE_NUMBER
-    nodePropertyDescriptors(3197) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3376) = FormalQtyType.StringType // LOCATION.METHOD_FULL_NAME
-    nodePropertyDescriptors(3377) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3466) = FormalQtyType.StringType // LOCATION.METHOD_SHORT_NAME
-    nodePropertyDescriptors(3467) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3826) = FormalQtyType.StringType // LOCATION.NODE_LABEL
-    nodePropertyDescriptors(3827) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4276) = FormalQtyType.StringType // LOCATION.PACKAGE_NAME
-    nodePropertyDescriptors(4277) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4726) = FormalQtyType.StringType // LOCATION.SYMBOL
-    nodePropertyDescriptors(4727) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5356) = FormalQtyType.RefType // LOCATION.node
-    nodePropertyDescriptors(5357) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(318) = FormalQtyType.StringType // MEMBER.AST_PARENT_FULL_NAME
-    nodePropertyDescriptors(319) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(408) = FormalQtyType.StringType // MEMBER.AST_PARENT_TYPE
-    nodePropertyDescriptors(409) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(948) = FormalQtyType.StringType // MEMBER.CODE
-    nodePropertyDescriptors(949) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1038) = FormalQtyType.IntType // MEMBER.COLUMN_NUMBER
-    nodePropertyDescriptors(1039) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1668) = FormalQtyType.StringType // MEMBER.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1669) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(2118) = FormalQtyType.StringType // MEMBER.GENERIC_SIGNATURE
-    nodePropertyDescriptors(2119) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3198) = FormalQtyType.IntType // MEMBER.LINE_NUMBER
-    nodePropertyDescriptors(3199) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3738) = FormalQtyType.StringType // MEMBER.NAME
-    nodePropertyDescriptors(3739) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4098) = FormalQtyType.IntType // MEMBER.ORDER
-    nodePropertyDescriptors(4099) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4458) = FormalQtyType.StringType // MEMBER.POSSIBLE_TYPES
-    nodePropertyDescriptors(4459) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4908) = FormalQtyType.StringType // MEMBER.TYPE_FULL_NAME
-    nodePropertyDescriptors(4909) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2210) = FormalQtyType.StringType // META_DATA.HASH
-    nodePropertyDescriptors(2211) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3110) = FormalQtyType.StringType // META_DATA.LANGUAGE
-    nodePropertyDescriptors(3111) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4190) = FormalQtyType.StringType // META_DATA.OVERLAYS
-    nodePropertyDescriptors(4191) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4550) = FormalQtyType.StringType // META_DATA.ROOT
-    nodePropertyDescriptors(4551) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5090) = FormalQtyType.StringType // META_DATA.VERSION
-    nodePropertyDescriptors(5091) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(322) = FormalQtyType.StringType // METHOD.AST_PARENT_FULL_NAME
-    nodePropertyDescriptors(323) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(412) = FormalQtyType.StringType // METHOD.AST_PARENT_TYPE
-    nodePropertyDescriptors(413) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(952) = FormalQtyType.StringType // METHOD.CODE
-    nodePropertyDescriptors(953) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1042) = FormalQtyType.IntType // METHOD.COLUMN_NUMBER
-    nodePropertyDescriptors(1043) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1132) = FormalQtyType.IntType // METHOD.COLUMN_NUMBER_END
-    nodePropertyDescriptors(1133) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1942) = FormalQtyType.StringType // METHOD.FILENAME
-    nodePropertyDescriptors(1943) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2032) = FormalQtyType.StringType // METHOD.FULL_NAME
-    nodePropertyDescriptors(2033) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2122) = FormalQtyType.StringType // METHOD.GENERIC_SIGNATURE
-    nodePropertyDescriptors(2123) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2212) = FormalQtyType.StringType // METHOD.HASH
-    nodePropertyDescriptors(2213) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(2752) = FormalQtyType.BoolType // METHOD.IS_EXTERNAL
-    nodePropertyDescriptors(2753) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3202) = FormalQtyType.IntType // METHOD.LINE_NUMBER
-    nodePropertyDescriptors(3203) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3292) = FormalQtyType.IntType // METHOD.LINE_NUMBER_END
-    nodePropertyDescriptors(3293) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3742) = FormalQtyType.StringType // METHOD.NAME
-    nodePropertyDescriptors(3743) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3922) = FormalQtyType.IntType // METHOD.OFFSET
-    nodePropertyDescriptors(3923) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4012) = FormalQtyType.IntType // METHOD.OFFSET_END
-    nodePropertyDescriptors(4013) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4102) = FormalQtyType.IntType // METHOD.ORDER
-    nodePropertyDescriptors(4103) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4642) = FormalQtyType.StringType // METHOD.SIGNATURE
-    nodePropertyDescriptors(4643) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(774) = FormalQtyType.StringType // METHOD_PARAMETER_IN.CLOSURE_BINDING_ID
-    nodePropertyDescriptors(775) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(954) = FormalQtyType.StringType // METHOD_PARAMETER_IN.CODE
-    nodePropertyDescriptors(955) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1044) = FormalQtyType.IntType // METHOD_PARAMETER_IN.COLUMN_NUMBER
-    nodePropertyDescriptors(1045) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1674) = FormalQtyType.StringType // METHOD_PARAMETER_IN.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1675) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(1764) = FormalQtyType.StringType // METHOD_PARAMETER_IN.EVALUATION_STRATEGY
-    nodePropertyDescriptors(1765) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2484) = FormalQtyType.IntType // METHOD_PARAMETER_IN.INDEX
-    nodePropertyDescriptors(2485) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2844) = FormalQtyType.BoolType // METHOD_PARAMETER_IN.IS_VARIADIC
-    nodePropertyDescriptors(2845) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3204) = FormalQtyType.IntType // METHOD_PARAMETER_IN.LINE_NUMBER
-    nodePropertyDescriptors(3205) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3744) = FormalQtyType.StringType // METHOD_PARAMETER_IN.NAME
-    nodePropertyDescriptors(3745) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4104) = FormalQtyType.IntType // METHOD_PARAMETER_IN.ORDER
-    nodePropertyDescriptors(4105) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4464) = FormalQtyType.StringType // METHOD_PARAMETER_IN.POSSIBLE_TYPES
-    nodePropertyDescriptors(4465) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4914) = FormalQtyType.StringType // METHOD_PARAMETER_IN.TYPE_FULL_NAME
-    nodePropertyDescriptors(4915) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(956) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.CODE
-    nodePropertyDescriptors(957) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1046) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.COLUMN_NUMBER
-    nodePropertyDescriptors(1047) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1766) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.EVALUATION_STRATEGY
-    nodePropertyDescriptors(1767) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2486) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.INDEX
-    nodePropertyDescriptors(2487) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2846) = FormalQtyType.BoolType // METHOD_PARAMETER_OUT.IS_VARIADIC
-    nodePropertyDescriptors(2847) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3206) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.LINE_NUMBER
-    nodePropertyDescriptors(3207) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3746) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.NAME
-    nodePropertyDescriptors(3747) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4106) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.ORDER
-    nodePropertyDescriptors(4107) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4916) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.TYPE_FULL_NAME
-    nodePropertyDescriptors(4917) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(148) = FormalQtyType.IntType // METHOD_REF.ARGUMENT_INDEX
-    nodePropertyDescriptors(149) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(238) = FormalQtyType.StringType // METHOD_REF.ARGUMENT_NAME
-    nodePropertyDescriptors(239) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(958) = FormalQtyType.StringType // METHOD_REF.CODE
-    nodePropertyDescriptors(959) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1048) = FormalQtyType.IntType // METHOD_REF.COLUMN_NUMBER
-    nodePropertyDescriptors(1049) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1678) = FormalQtyType.StringType // METHOD_REF.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1679) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3208) = FormalQtyType.IntType // METHOD_REF.LINE_NUMBER
-    nodePropertyDescriptors(3209) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3388) = FormalQtyType.StringType // METHOD_REF.METHOD_FULL_NAME
-    nodePropertyDescriptors(3389) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4108) = FormalQtyType.IntType // METHOD_REF.ORDER
-    nodePropertyDescriptors(4109) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4468) = FormalQtyType.StringType // METHOD_REF.POSSIBLE_TYPES
-    nodePropertyDescriptors(4469) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4918) = FormalQtyType.StringType // METHOD_REF.TYPE_FULL_NAME
-    nodePropertyDescriptors(4919) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(960) = FormalQtyType.StringType // METHOD_RETURN.CODE
-    nodePropertyDescriptors(961) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1050) = FormalQtyType.IntType // METHOD_RETURN.COLUMN_NUMBER
-    nodePropertyDescriptors(1051) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1680) = FormalQtyType.StringType // METHOD_RETURN.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1681) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(1770) = FormalQtyType.StringType // METHOD_RETURN.EVALUATION_STRATEGY
-    nodePropertyDescriptors(1771) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3210) = FormalQtyType.IntType // METHOD_RETURN.LINE_NUMBER
-    nodePropertyDescriptors(3211) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4110) = FormalQtyType.IntType // METHOD_RETURN.ORDER
-    nodePropertyDescriptors(4111) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4470) = FormalQtyType.StringType // METHOD_RETURN.POSSIBLE_TYPES
-    nodePropertyDescriptors(4471) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4920) = FormalQtyType.StringType // METHOD_RETURN.TYPE_FULL_NAME
-    nodePropertyDescriptors(4921) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(962) = FormalQtyType.StringType // MODIFIER.CODE
-    nodePropertyDescriptors(963) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1052) = FormalQtyType.IntType // MODIFIER.COLUMN_NUMBER
-    nodePropertyDescriptors(1053) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3212) = FormalQtyType.IntType // MODIFIER.LINE_NUMBER
-    nodePropertyDescriptors(3213) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3572) = FormalQtyType.StringType // MODIFIER.MODIFIER_TYPE
-    nodePropertyDescriptors(3573) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4112) = FormalQtyType.IntType // MODIFIER.ORDER
-    nodePropertyDescriptors(4113) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3664) = FormalQtyType.StringType // MYNODETYPE.MYPROPERTY
-    nodePropertyDescriptors(3665) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(966) = FormalQtyType.StringType // NAMESPACE.CODE
-    nodePropertyDescriptors(967) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1056) = FormalQtyType.IntType // NAMESPACE.COLUMN_NUMBER
-    nodePropertyDescriptors(1057) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3216) = FormalQtyType.IntType // NAMESPACE.LINE_NUMBER
-    nodePropertyDescriptors(3217) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3756) = FormalQtyType.StringType // NAMESPACE.NAME
-    nodePropertyDescriptors(3757) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4116) = FormalQtyType.IntType // NAMESPACE.ORDER
-    nodePropertyDescriptors(4117) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(968) = FormalQtyType.StringType // NAMESPACE_BLOCK.CODE
-    nodePropertyDescriptors(969) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1058) = FormalQtyType.IntType // NAMESPACE_BLOCK.COLUMN_NUMBER
-    nodePropertyDescriptors(1059) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1958) = FormalQtyType.StringType // NAMESPACE_BLOCK.FILENAME
-    nodePropertyDescriptors(1959) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2048) = FormalQtyType.StringType // NAMESPACE_BLOCK.FULL_NAME
-    nodePropertyDescriptors(2049) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3218) = FormalQtyType.IntType // NAMESPACE_BLOCK.LINE_NUMBER
-    nodePropertyDescriptors(3219) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3758) = FormalQtyType.StringType // NAMESPACE_BLOCK.NAME
-    nodePropertyDescriptors(3759) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4118) = FormalQtyType.IntType // NAMESPACE_BLOCK.ORDER
-    nodePropertyDescriptors(4119) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(160) = FormalQtyType.IntType // RETURN.ARGUMENT_INDEX
-    nodePropertyDescriptors(161) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(250) = FormalQtyType.StringType // RETURN.ARGUMENT_NAME
-    nodePropertyDescriptors(251) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(970) = FormalQtyType.StringType // RETURN.CODE
-    nodePropertyDescriptors(971) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1060) = FormalQtyType.IntType // RETURN.COLUMN_NUMBER
-    nodePropertyDescriptors(1061) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3220) = FormalQtyType.IntType // RETURN.LINE_NUMBER
-    nodePropertyDescriptors(3221) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4120) = FormalQtyType.IntType // RETURN.ORDER
-    nodePropertyDescriptors(4121) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3762) = FormalQtyType.StringType // TAG.NAME
-    nodePropertyDescriptors(3763) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5022) = FormalQtyType.StringType // TAG.VALUE
-    nodePropertyDescriptors(5023) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5384) = FormalQtyType.RefType // TAG_NODE_PAIR.node
-    nodePropertyDescriptors(5385) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(5474) = FormalQtyType.RefType // TAG_NODE_PAIR.tag
-    nodePropertyDescriptors(5475) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(166) = FormalQtyType.IntType // TEMPLATE_DOM.ARGUMENT_INDEX
-    nodePropertyDescriptors(167) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(256) = FormalQtyType.StringType // TEMPLATE_DOM.ARGUMENT_NAME
-    nodePropertyDescriptors(257) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(976) = FormalQtyType.StringType // TEMPLATE_DOM.CODE
-    nodePropertyDescriptors(977) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1066) = FormalQtyType.IntType // TEMPLATE_DOM.COLUMN_NUMBER
-    nodePropertyDescriptors(1067) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3226) = FormalQtyType.IntType // TEMPLATE_DOM.LINE_NUMBER
-    nodePropertyDescriptors(3227) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3766) = FormalQtyType.StringType // TEMPLATE_DOM.NAME
-    nodePropertyDescriptors(3767) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4126) = FormalQtyType.IntType // TEMPLATE_DOM.ORDER
-    nodePropertyDescriptors(4127) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2058) = FormalQtyType.StringType // TYPE.FULL_NAME
-    nodePropertyDescriptors(2059) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3768) = FormalQtyType.StringType // TYPE.NAME
-    nodePropertyDescriptors(3769) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4848) = FormalQtyType.StringType // TYPE.TYPE_DECL_FULL_NAME
-    nodePropertyDescriptors(4849) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(980) = FormalQtyType.StringType // TYPE_ARGUMENT.CODE
-    nodePropertyDescriptors(981) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1070) = FormalQtyType.IntType // TYPE_ARGUMENT.COLUMN_NUMBER
-    nodePropertyDescriptors(1071) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3230) = FormalQtyType.IntType // TYPE_ARGUMENT.LINE_NUMBER
-    nodePropertyDescriptors(3231) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4130) = FormalQtyType.IntType // TYPE_ARGUMENT.ORDER
-    nodePropertyDescriptors(4131) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(82) = FormalQtyType.StringType // TYPE_DECL.ALIAS_TYPE_FULL_NAME
-    nodePropertyDescriptors(83) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(352) = FormalQtyType.StringType // TYPE_DECL.AST_PARENT_FULL_NAME
-    nodePropertyDescriptors(353) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(442) = FormalQtyType.StringType // TYPE_DECL.AST_PARENT_TYPE
-    nodePropertyDescriptors(443) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(982) = FormalQtyType.StringType // TYPE_DECL.CODE
-    nodePropertyDescriptors(983) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1072) = FormalQtyType.IntType // TYPE_DECL.COLUMN_NUMBER
-    nodePropertyDescriptors(1073) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1972) = FormalQtyType.StringType // TYPE_DECL.FILENAME
-    nodePropertyDescriptors(1973) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2062) = FormalQtyType.StringType // TYPE_DECL.FULL_NAME
-    nodePropertyDescriptors(2063) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2152) = FormalQtyType.StringType // TYPE_DECL.GENERIC_SIGNATURE
-    nodePropertyDescriptors(2153) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(2602) = FormalQtyType.StringType // TYPE_DECL.INHERITS_FROM_TYPE_FULL_NAME
-    nodePropertyDescriptors(2603) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(2782) = FormalQtyType.BoolType // TYPE_DECL.IS_EXTERNAL
-    nodePropertyDescriptors(2783) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3232) = FormalQtyType.IntType // TYPE_DECL.LINE_NUMBER
-    nodePropertyDescriptors(3233) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3772) = FormalQtyType.StringType // TYPE_DECL.NAME
-    nodePropertyDescriptors(3773) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(3952) = FormalQtyType.IntType // TYPE_DECL.OFFSET
-    nodePropertyDescriptors(3953) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4042) = FormalQtyType.IntType // TYPE_DECL.OFFSET_END
-    nodePropertyDescriptors(4043) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4132) = FormalQtyType.IntType // TYPE_DECL.ORDER
-    nodePropertyDescriptors(4133) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(984) = FormalQtyType.StringType // TYPE_PARAMETER.CODE
-    nodePropertyDescriptors(985) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1074) = FormalQtyType.IntType // TYPE_PARAMETER.COLUMN_NUMBER
-    nodePropertyDescriptors(1075) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3234) = FormalQtyType.IntType // TYPE_PARAMETER.LINE_NUMBER
-    nodePropertyDescriptors(3235) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(3774) = FormalQtyType.StringType // TYPE_PARAMETER.NAME
-    nodePropertyDescriptors(3775) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4134) = FormalQtyType.IntType // TYPE_PARAMETER.ORDER
-    nodePropertyDescriptors(4135) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(176) = FormalQtyType.IntType // TYPE_REF.ARGUMENT_INDEX
-    nodePropertyDescriptors(177) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(266) = FormalQtyType.StringType // TYPE_REF.ARGUMENT_NAME
-    nodePropertyDescriptors(267) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(986) = FormalQtyType.StringType // TYPE_REF.CODE
-    nodePropertyDescriptors(987) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1076) = FormalQtyType.IntType // TYPE_REF.COLUMN_NUMBER
-    nodePropertyDescriptors(1077) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1706) = FormalQtyType.StringType // TYPE_REF.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1707) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3236) = FormalQtyType.IntType // TYPE_REF.LINE_NUMBER
-    nodePropertyDescriptors(3237) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4136) = FormalQtyType.IntType // TYPE_REF.ORDER
-    nodePropertyDescriptors(4137) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4496) = FormalQtyType.StringType // TYPE_REF.POSSIBLE_TYPES
-    nodePropertyDescriptors(4497) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4946) = FormalQtyType.StringType // TYPE_REF.TYPE_FULL_NAME
-    nodePropertyDescriptors(4947) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(178) = FormalQtyType.IntType // UNKNOWN.ARGUMENT_INDEX
-    nodePropertyDescriptors(179) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(268) = FormalQtyType.StringType // UNKNOWN.ARGUMENT_NAME
-    nodePropertyDescriptors(269) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(988) = FormalQtyType.StringType // UNKNOWN.CODE
+    nodePropertyDescriptors(3432) = FormalQtyType.IntType // ANNOTATION.OFFSET
+    nodePropertyDescriptors(3433) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3520) = FormalQtyType.IntType // ANNOTATION.OFFSET_END
+    nodePropertyDescriptors(3521) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3608) = FormalQtyType.IntType // ANNOTATION.ORDER
+    nodePropertyDescriptors(3609) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(90) = FormalQtyType.IntType // ANNOTATION_LITERAL.ARGUMENT_INDEX
+    nodePropertyDescriptors(91) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(178) = FormalQtyType.StringType // ANNOTATION_LITERAL.ARGUMENT_NAME
+    nodePropertyDescriptors(179) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(618) = FormalQtyType.StringType // ANNOTATION_LITERAL.CODE
+    nodePropertyDescriptors(619) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(706) = FormalQtyType.IntType // ANNOTATION_LITERAL.COLUMN_NUMBER
+    nodePropertyDescriptors(707) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2906) = FormalQtyType.IntType // ANNOTATION_LITERAL.LINE_NUMBER
+    nodePropertyDescriptors(2907) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3346) = FormalQtyType.StringType // ANNOTATION_LITERAL.NAME
+    nodePropertyDescriptors(3347) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3434) = FormalQtyType.IntType // ANNOTATION_LITERAL.OFFSET
+    nodePropertyDescriptors(3435) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3522) = FormalQtyType.IntType // ANNOTATION_LITERAL.OFFSET_END
+    nodePropertyDescriptors(3523) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3610) = FormalQtyType.IntType // ANNOTATION_LITERAL.ORDER
+    nodePropertyDescriptors(3611) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(620) = FormalQtyType.StringType // ANNOTATION_PARAMETER.CODE
+    nodePropertyDescriptors(621) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(708) = FormalQtyType.IntType // ANNOTATION_PARAMETER.COLUMN_NUMBER
+    nodePropertyDescriptors(709) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2908) = FormalQtyType.IntType // ANNOTATION_PARAMETER.LINE_NUMBER
+    nodePropertyDescriptors(2909) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3436) = FormalQtyType.IntType // ANNOTATION_PARAMETER.OFFSET
+    nodePropertyDescriptors(3437) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3524) = FormalQtyType.IntType // ANNOTATION_PARAMETER.OFFSET_END
+    nodePropertyDescriptors(3525) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3612) = FormalQtyType.IntType // ANNOTATION_PARAMETER.ORDER
+    nodePropertyDescriptors(3613) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(622) = FormalQtyType.StringType // ANNOTATION_PARAMETER_ASSIGN.CODE
+    nodePropertyDescriptors(623) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(710) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.COLUMN_NUMBER
+    nodePropertyDescriptors(711) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2910) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.LINE_NUMBER
+    nodePropertyDescriptors(2911) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3438) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.OFFSET
+    nodePropertyDescriptors(3439) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3526) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.OFFSET_END
+    nodePropertyDescriptors(3527) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3614) = FormalQtyType.IntType // ANNOTATION_PARAMETER_ASSIGN.ORDER
+    nodePropertyDescriptors(3615) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(96) = FormalQtyType.IntType // ARRAY_INITIALIZER.ARGUMENT_INDEX
+    nodePropertyDescriptors(97) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(184) = FormalQtyType.StringType // ARRAY_INITIALIZER.ARGUMENT_NAME
+    nodePropertyDescriptors(185) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(624) = FormalQtyType.StringType // ARRAY_INITIALIZER.CODE
+    nodePropertyDescriptors(625) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(712) = FormalQtyType.IntType // ARRAY_INITIALIZER.COLUMN_NUMBER
+    nodePropertyDescriptors(713) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2912) = FormalQtyType.IntType // ARRAY_INITIALIZER.LINE_NUMBER
+    nodePropertyDescriptors(2913) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3440) = FormalQtyType.IntType // ARRAY_INITIALIZER.OFFSET
+    nodePropertyDescriptors(3441) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3528) = FormalQtyType.IntType // ARRAY_INITIALIZER.OFFSET_END
+    nodePropertyDescriptors(3529) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3616) = FormalQtyType.IntType // ARRAY_INITIALIZER.ORDER
+    nodePropertyDescriptors(3617) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3090) = FormalQtyType.StringType // BINDING.METHOD_FULL_NAME
+    nodePropertyDescriptors(3091) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3354) = FormalQtyType.StringType // BINDING.NAME
+    nodePropertyDescriptors(3355) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4058) = FormalQtyType.StringType // BINDING.SIGNATURE
+    nodePropertyDescriptors(4059) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(100) = FormalQtyType.IntType // BLOCK.ARGUMENT_INDEX
+    nodePropertyDescriptors(101) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(188) = FormalQtyType.StringType // BLOCK.ARGUMENT_NAME
+    nodePropertyDescriptors(189) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(628) = FormalQtyType.StringType // BLOCK.CODE
+    nodePropertyDescriptors(629) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(716) = FormalQtyType.IntType // BLOCK.COLUMN_NUMBER
+    nodePropertyDescriptors(717) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1332) = FormalQtyType.StringType // BLOCK.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1333) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2916) = FormalQtyType.IntType // BLOCK.LINE_NUMBER
+    nodePropertyDescriptors(2917) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3444) = FormalQtyType.IntType // BLOCK.OFFSET
+    nodePropertyDescriptors(3445) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3532) = FormalQtyType.IntType // BLOCK.OFFSET_END
+    nodePropertyDescriptors(3533) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3620) = FormalQtyType.IntType // BLOCK.ORDER
+    nodePropertyDescriptors(3621) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3884) = FormalQtyType.StringType // BLOCK.POSSIBLE_TYPES
+    nodePropertyDescriptors(3885) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4236) = FormalQtyType.StringType // BLOCK.TYPE_FULL_NAME
+    nodePropertyDescriptors(4237) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(102) = FormalQtyType.IntType // CALL.ARGUMENT_INDEX
+    nodePropertyDescriptors(103) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(190) = FormalQtyType.StringType // CALL.ARGUMENT_NAME
+    nodePropertyDescriptors(191) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(630) = FormalQtyType.StringType // CALL.CODE
+    nodePropertyDescriptors(631) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(718) = FormalQtyType.IntType // CALL.COLUMN_NUMBER
+    nodePropertyDescriptors(719) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1246) = FormalQtyType.StringType // CALL.DISPATCH_TYPE
+    nodePropertyDescriptors(1247) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1334) = FormalQtyType.StringType // CALL.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1335) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2918) = FormalQtyType.IntType // CALL.LINE_NUMBER
+    nodePropertyDescriptors(2919) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3094) = FormalQtyType.StringType // CALL.METHOD_FULL_NAME
+    nodePropertyDescriptors(3095) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3358) = FormalQtyType.StringType // CALL.NAME
+    nodePropertyDescriptors(3359) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3446) = FormalQtyType.IntType // CALL.OFFSET
+    nodePropertyDescriptors(3447) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3534) = FormalQtyType.IntType // CALL.OFFSET_END
+    nodePropertyDescriptors(3535) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3622) = FormalQtyType.IntType // CALL.ORDER
+    nodePropertyDescriptors(3623) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3886) = FormalQtyType.StringType // CALL.POSSIBLE_TYPES
+    nodePropertyDescriptors(3887) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4062) = FormalQtyType.StringType // CALL.SIGNATURE
+    nodePropertyDescriptors(4063) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4238) = FormalQtyType.StringType // CALL.TYPE_FULL_NAME
+    nodePropertyDescriptors(4239) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(544) = FormalQtyType.StringType // CLOSURE_BINDING.CLOSURE_BINDING_ID
+    nodePropertyDescriptors(545) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1424) = FormalQtyType.StringType // CLOSURE_BINDING.EVALUATION_STRATEGY
+    nodePropertyDescriptors(1425) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(634) = FormalQtyType.StringType // COMMENT.CODE
+    nodePropertyDescriptors(635) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(722) = FormalQtyType.IntType // COMMENT.COLUMN_NUMBER
+    nodePropertyDescriptors(723) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1690) = FormalQtyType.StringType // COMMENT.FILENAME
+    nodePropertyDescriptors(1691) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2922) = FormalQtyType.IntType // COMMENT.LINE_NUMBER
+    nodePropertyDescriptors(2923) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3450) = FormalQtyType.IntType // COMMENT.OFFSET
+    nodePropertyDescriptors(3451) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3538) = FormalQtyType.IntType // COMMENT.OFFSET_END
+    nodePropertyDescriptors(3539) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3626) = FormalQtyType.IntType // COMMENT.ORDER
+    nodePropertyDescriptors(3627) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(988) = FormalQtyType.StringType // CONFIG_FILE.CONTENT
     nodePropertyDescriptors(989) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1078) = FormalQtyType.IntType // UNKNOWN.COLUMN_NUMBER
-    nodePropertyDescriptors(1079) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(1258) = FormalQtyType.StringType // UNKNOWN.CONTAINED_REF
-    nodePropertyDescriptors(1259) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(1708) = FormalQtyType.StringType // UNKNOWN.DYNAMIC_TYPE_HINT_FULL_NAME
-    nodePropertyDescriptors(1709) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(3238) = FormalQtyType.IntType // UNKNOWN.LINE_NUMBER
-    nodePropertyDescriptors(3239) = FormalQtyType.QtyOption
-    nodePropertyDescriptors(4138) = FormalQtyType.IntType // UNKNOWN.ORDER
-    nodePropertyDescriptors(4139) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4408) = FormalQtyType.StringType // UNKNOWN.PARSER_TYPE_NAME
-    nodePropertyDescriptors(4409) = FormalQtyType.QtyOne
-    nodePropertyDescriptors(4498) = FormalQtyType.StringType // UNKNOWN.POSSIBLE_TYPES
-    nodePropertyDescriptors(4499) = FormalQtyType.QtyMulti
-    nodePropertyDescriptors(4948) = FormalQtyType.StringType // UNKNOWN.TYPE_FULL_NAME
-    nodePropertyDescriptors(4949) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3364) = FormalQtyType.StringType // CONFIG_FILE.NAME
+    nodePropertyDescriptors(3365) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(110) = FormalQtyType.IntType // CONTROL_STRUCTURE.ARGUMENT_INDEX
+    nodePropertyDescriptors(111) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(198) = FormalQtyType.StringType // CONTROL_STRUCTURE.ARGUMENT_NAME
+    nodePropertyDescriptors(199) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(638) = FormalQtyType.StringType // CONTROL_STRUCTURE.CODE
+    nodePropertyDescriptors(639) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(726) = FormalQtyType.IntType // CONTROL_STRUCTURE.COLUMN_NUMBER
+    nodePropertyDescriptors(727) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1078) = FormalQtyType.StringType // CONTROL_STRUCTURE.CONTROL_STRUCTURE_TYPE
+    nodePropertyDescriptors(1079) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2926) = FormalQtyType.IntType // CONTROL_STRUCTURE.LINE_NUMBER
+    nodePropertyDescriptors(2927) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3454) = FormalQtyType.IntType // CONTROL_STRUCTURE.OFFSET
+    nodePropertyDescriptors(3455) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3542) = FormalQtyType.IntType // CONTROL_STRUCTURE.OFFSET_END
+    nodePropertyDescriptors(3543) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3630) = FormalQtyType.IntType // CONTROL_STRUCTURE.ORDER
+    nodePropertyDescriptors(3631) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3806) = FormalQtyType.StringType // CONTROL_STRUCTURE.PARSER_TYPE_NAME
+    nodePropertyDescriptors(3807) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1168) = FormalQtyType.StringType // DEPENDENCY.DEPENDENCY_GROUP_ID
+    nodePropertyDescriptors(1169) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3368) = FormalQtyType.StringType // DEPENDENCY.NAME
+    nodePropertyDescriptors(3369) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4424) = FormalQtyType.StringType // DEPENDENCY.VERSION
+    nodePropertyDescriptors(4425) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(114) = FormalQtyType.IntType // FIELD_IDENTIFIER.ARGUMENT_INDEX
+    nodePropertyDescriptors(115) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(202) = FormalQtyType.StringType // FIELD_IDENTIFIER.ARGUMENT_NAME
+    nodePropertyDescriptors(203) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(466) = FormalQtyType.StringType // FIELD_IDENTIFIER.CANONICAL_NAME
+    nodePropertyDescriptors(467) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(642) = FormalQtyType.StringType // FIELD_IDENTIFIER.CODE
+    nodePropertyDescriptors(643) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(730) = FormalQtyType.IntType // FIELD_IDENTIFIER.COLUMN_NUMBER
+    nodePropertyDescriptors(731) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2930) = FormalQtyType.IntType // FIELD_IDENTIFIER.LINE_NUMBER
+    nodePropertyDescriptors(2931) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3458) = FormalQtyType.IntType // FIELD_IDENTIFIER.OFFSET
+    nodePropertyDescriptors(3459) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3546) = FormalQtyType.IntType // FIELD_IDENTIFIER.OFFSET_END
+    nodePropertyDescriptors(3547) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3634) = FormalQtyType.IntType // FIELD_IDENTIFIER.ORDER
+    nodePropertyDescriptors(3635) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(644) = FormalQtyType.StringType // FILE.CODE
+    nodePropertyDescriptors(645) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(732) = FormalQtyType.IntType // FILE.COLUMN_NUMBER
+    nodePropertyDescriptors(733) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(996) = FormalQtyType.StringType // FILE.CONTENT
+    nodePropertyDescriptors(997) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1964) = FormalQtyType.StringType // FILE.HASH
+    nodePropertyDescriptors(1965) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2932) = FormalQtyType.IntType // FILE.LINE_NUMBER
+    nodePropertyDescriptors(2933) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3372) = FormalQtyType.StringType // FILE.NAME
+    nodePropertyDescriptors(3373) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3460) = FormalQtyType.IntType // FILE.OFFSET
+    nodePropertyDescriptors(3461) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3548) = FormalQtyType.IntType // FILE.OFFSET_END
+    nodePropertyDescriptors(3549) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3636) = FormalQtyType.IntType // FILE.ORDER
+    nodePropertyDescriptors(3637) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1526) = FormalQtyType.StringType // FINDING.EVIDENCE_DESCRIPTION
+    nodePropertyDescriptors(1527) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4518) = FormalQtyType.RefType // FINDING.evidence
+    nodePropertyDescriptors(4519) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4606) = FormalQtyType.RefType // FINDING.keyValuePairs
+    nodePropertyDescriptors(4607) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(120) = FormalQtyType.IntType // IDENTIFIER.ARGUMENT_INDEX
+    nodePropertyDescriptors(121) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(208) = FormalQtyType.StringType // IDENTIFIER.ARGUMENT_NAME
+    nodePropertyDescriptors(209) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(648) = FormalQtyType.StringType // IDENTIFIER.CODE
+    nodePropertyDescriptors(649) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(736) = FormalQtyType.IntType // IDENTIFIER.COLUMN_NUMBER
+    nodePropertyDescriptors(737) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1352) = FormalQtyType.StringType // IDENTIFIER.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1353) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2936) = FormalQtyType.IntType // IDENTIFIER.LINE_NUMBER
+    nodePropertyDescriptors(2937) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3376) = FormalQtyType.StringType // IDENTIFIER.NAME
+    nodePropertyDescriptors(3377) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3464) = FormalQtyType.IntType // IDENTIFIER.OFFSET
+    nodePropertyDescriptors(3465) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3552) = FormalQtyType.IntType // IDENTIFIER.OFFSET_END
+    nodePropertyDescriptors(3553) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3640) = FormalQtyType.IntType // IDENTIFIER.ORDER
+    nodePropertyDescriptors(3641) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3904) = FormalQtyType.StringType // IDENTIFIER.POSSIBLE_TYPES
+    nodePropertyDescriptors(3905) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4256) = FormalQtyType.StringType // IDENTIFIER.TYPE_FULL_NAME
+    nodePropertyDescriptors(4257) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(650) = FormalQtyType.StringType // IMPORT.CODE
+    nodePropertyDescriptors(651) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(738) = FormalQtyType.IntType // IMPORT.COLUMN_NUMBER
+    nodePropertyDescriptors(739) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1618) = FormalQtyType.BoolType // IMPORT.EXPLICIT_AS
+    nodePropertyDescriptors(1619) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2058) = FormalQtyType.StringType // IMPORT.IMPORTED_AS
+    nodePropertyDescriptors(2059) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2146) = FormalQtyType.StringType // IMPORT.IMPORTED_ENTITY
+    nodePropertyDescriptors(2147) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2410) = FormalQtyType.BoolType // IMPORT.IS_EXPLICIT
+    nodePropertyDescriptors(2411) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2674) = FormalQtyType.BoolType // IMPORT.IS_WILDCARD
+    nodePropertyDescriptors(2675) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2938) = FormalQtyType.IntType // IMPORT.LINE_NUMBER
+    nodePropertyDescriptors(2939) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3466) = FormalQtyType.IntType // IMPORT.OFFSET
+    nodePropertyDescriptors(3467) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3554) = FormalQtyType.IntType // IMPORT.OFFSET_END
+    nodePropertyDescriptors(3555) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3642) = FormalQtyType.IntType // IMPORT.ORDER
+    nodePropertyDescriptors(3643) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(652) = FormalQtyType.StringType // JUMP_LABEL.CODE
+    nodePropertyDescriptors(653) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(740) = FormalQtyType.IntType // JUMP_LABEL.COLUMN_NUMBER
+    nodePropertyDescriptors(741) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2940) = FormalQtyType.IntType // JUMP_LABEL.LINE_NUMBER
+    nodePropertyDescriptors(2941) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3380) = FormalQtyType.StringType // JUMP_LABEL.NAME
+    nodePropertyDescriptors(3381) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3468) = FormalQtyType.IntType // JUMP_LABEL.OFFSET
+    nodePropertyDescriptors(3469) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3556) = FormalQtyType.IntType // JUMP_LABEL.OFFSET_END
+    nodePropertyDescriptors(3557) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3644) = FormalQtyType.IntType // JUMP_LABEL.ORDER
+    nodePropertyDescriptors(3645) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3820) = FormalQtyType.StringType // JUMP_LABEL.PARSER_TYPE_NAME
+    nodePropertyDescriptors(3821) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(126) = FormalQtyType.IntType // JUMP_TARGET.ARGUMENT_INDEX
+    nodePropertyDescriptors(127) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(654) = FormalQtyType.StringType // JUMP_TARGET.CODE
+    nodePropertyDescriptors(655) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(742) = FormalQtyType.IntType // JUMP_TARGET.COLUMN_NUMBER
+    nodePropertyDescriptors(743) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2942) = FormalQtyType.IntType // JUMP_TARGET.LINE_NUMBER
+    nodePropertyDescriptors(2943) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3382) = FormalQtyType.StringType // JUMP_TARGET.NAME
+    nodePropertyDescriptors(3383) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3470) = FormalQtyType.IntType // JUMP_TARGET.OFFSET
+    nodePropertyDescriptors(3471) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3558) = FormalQtyType.IntType // JUMP_TARGET.OFFSET_END
+    nodePropertyDescriptors(3559) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3646) = FormalQtyType.IntType // JUMP_TARGET.ORDER
+    nodePropertyDescriptors(3647) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3822) = FormalQtyType.StringType // JUMP_TARGET.PARSER_TYPE_NAME
+    nodePropertyDescriptors(3823) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2768) = FormalQtyType.StringType // KEY_VALUE_PAIR.KEY
+    nodePropertyDescriptors(2769) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4352) = FormalQtyType.StringType // KEY_VALUE_PAIR.VALUE
+    nodePropertyDescriptors(4353) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(130) = FormalQtyType.IntType // LITERAL.ARGUMENT_INDEX
+    nodePropertyDescriptors(131) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(218) = FormalQtyType.StringType // LITERAL.ARGUMENT_NAME
+    nodePropertyDescriptors(219) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(658) = FormalQtyType.StringType // LITERAL.CODE
+    nodePropertyDescriptors(659) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(746) = FormalQtyType.IntType // LITERAL.COLUMN_NUMBER
+    nodePropertyDescriptors(747) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1362) = FormalQtyType.StringType // LITERAL.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1363) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2946) = FormalQtyType.IntType // LITERAL.LINE_NUMBER
+    nodePropertyDescriptors(2947) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3474) = FormalQtyType.IntType // LITERAL.OFFSET
+    nodePropertyDescriptors(3475) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3562) = FormalQtyType.IntType // LITERAL.OFFSET_END
+    nodePropertyDescriptors(3563) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3650) = FormalQtyType.IntType // LITERAL.ORDER
+    nodePropertyDescriptors(3651) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3914) = FormalQtyType.StringType // LITERAL.POSSIBLE_TYPES
+    nodePropertyDescriptors(3915) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4266) = FormalQtyType.StringType // LITERAL.TYPE_FULL_NAME
+    nodePropertyDescriptors(4267) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(572) = FormalQtyType.StringType // LOCAL.CLOSURE_BINDING_ID
+    nodePropertyDescriptors(573) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(660) = FormalQtyType.StringType // LOCAL.CODE
+    nodePropertyDescriptors(661) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(748) = FormalQtyType.IntType // LOCAL.COLUMN_NUMBER
+    nodePropertyDescriptors(749) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1364) = FormalQtyType.StringType // LOCAL.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1365) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(1892) = FormalQtyType.StringType // LOCAL.GENERIC_SIGNATURE
+    nodePropertyDescriptors(1893) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2948) = FormalQtyType.IntType // LOCAL.LINE_NUMBER
+    nodePropertyDescriptors(2949) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3388) = FormalQtyType.StringType // LOCAL.NAME
+    nodePropertyDescriptors(3389) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3476) = FormalQtyType.IntType // LOCAL.OFFSET
+    nodePropertyDescriptors(3477) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3564) = FormalQtyType.IntType // LOCAL.OFFSET_END
+    nodePropertyDescriptors(3565) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3652) = FormalQtyType.IntType // LOCAL.ORDER
+    nodePropertyDescriptors(3653) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3916) = FormalQtyType.StringType // LOCAL.POSSIBLE_TYPES
+    nodePropertyDescriptors(3917) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4268) = FormalQtyType.StringType // LOCAL.TYPE_FULL_NAME
+    nodePropertyDescriptors(4269) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(310) = FormalQtyType.StringType // MEMBER.AST_PARENT_FULL_NAME
+    nodePropertyDescriptors(311) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(398) = FormalQtyType.StringType // MEMBER.AST_PARENT_TYPE
+    nodePropertyDescriptors(399) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(662) = FormalQtyType.StringType // MEMBER.CODE
+    nodePropertyDescriptors(663) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(750) = FormalQtyType.IntType // MEMBER.COLUMN_NUMBER
+    nodePropertyDescriptors(751) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1366) = FormalQtyType.StringType // MEMBER.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1367) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(1894) = FormalQtyType.StringType // MEMBER.GENERIC_SIGNATURE
+    nodePropertyDescriptors(1895) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2950) = FormalQtyType.IntType // MEMBER.LINE_NUMBER
+    nodePropertyDescriptors(2951) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3390) = FormalQtyType.StringType // MEMBER.NAME
+    nodePropertyDescriptors(3391) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3478) = FormalQtyType.IntType // MEMBER.OFFSET
+    nodePropertyDescriptors(3479) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3566) = FormalQtyType.IntType // MEMBER.OFFSET_END
+    nodePropertyDescriptors(3567) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3654) = FormalQtyType.IntType // MEMBER.ORDER
+    nodePropertyDescriptors(3655) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3918) = FormalQtyType.StringType // MEMBER.POSSIBLE_TYPES
+    nodePropertyDescriptors(3919) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4270) = FormalQtyType.StringType // MEMBER.TYPE_FULL_NAME
+    nodePropertyDescriptors(4271) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1984) = FormalQtyType.StringType // META_DATA.HASH
+    nodePropertyDescriptors(1985) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2864) = FormalQtyType.StringType // META_DATA.LANGUAGE
+    nodePropertyDescriptors(2865) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3744) = FormalQtyType.StringType // META_DATA.OVERLAYS
+    nodePropertyDescriptors(3745) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4008) = FormalQtyType.StringType // META_DATA.ROOT
+    nodePropertyDescriptors(4009) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4448) = FormalQtyType.StringType // META_DATA.VERSION
+    nodePropertyDescriptors(4449) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(314) = FormalQtyType.StringType // METHOD.AST_PARENT_FULL_NAME
+    nodePropertyDescriptors(315) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(402) = FormalQtyType.StringType // METHOD.AST_PARENT_TYPE
+    nodePropertyDescriptors(403) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(666) = FormalQtyType.StringType // METHOD.CODE
+    nodePropertyDescriptors(667) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(754) = FormalQtyType.IntType // METHOD.COLUMN_NUMBER
+    nodePropertyDescriptors(755) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(842) = FormalQtyType.IntType // METHOD.COLUMN_NUMBER_END
+    nodePropertyDescriptors(843) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1722) = FormalQtyType.StringType // METHOD.FILENAME
+    nodePropertyDescriptors(1723) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1810) = FormalQtyType.StringType // METHOD.FULL_NAME
+    nodePropertyDescriptors(1811) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1898) = FormalQtyType.StringType // METHOD.GENERIC_SIGNATURE
+    nodePropertyDescriptors(1899) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1986) = FormalQtyType.StringType // METHOD.HASH
+    nodePropertyDescriptors(1987) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2514) = FormalQtyType.BoolType // METHOD.IS_EXTERNAL
+    nodePropertyDescriptors(2515) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2954) = FormalQtyType.IntType // METHOD.LINE_NUMBER
+    nodePropertyDescriptors(2955) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3042) = FormalQtyType.IntType // METHOD.LINE_NUMBER_END
+    nodePropertyDescriptors(3043) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3394) = FormalQtyType.StringType // METHOD.NAME
+    nodePropertyDescriptors(3395) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3482) = FormalQtyType.IntType // METHOD.OFFSET
+    nodePropertyDescriptors(3483) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3570) = FormalQtyType.IntType // METHOD.OFFSET_END
+    nodePropertyDescriptors(3571) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3658) = FormalQtyType.IntType // METHOD.ORDER
+    nodePropertyDescriptors(3659) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4098) = FormalQtyType.StringType // METHOD.SIGNATURE
+    nodePropertyDescriptors(4099) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(580) = FormalQtyType.StringType // METHOD_PARAMETER_IN.CLOSURE_BINDING_ID
+    nodePropertyDescriptors(581) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(668) = FormalQtyType.StringType // METHOD_PARAMETER_IN.CODE
+    nodePropertyDescriptors(669) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(756) = FormalQtyType.IntType // METHOD_PARAMETER_IN.COLUMN_NUMBER
+    nodePropertyDescriptors(757) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1372) = FormalQtyType.StringType // METHOD_PARAMETER_IN.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1373) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(1460) = FormalQtyType.StringType // METHOD_PARAMETER_IN.EVALUATION_STRATEGY
+    nodePropertyDescriptors(1461) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2252) = FormalQtyType.IntType // METHOD_PARAMETER_IN.INDEX
+    nodePropertyDescriptors(2253) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2604) = FormalQtyType.BoolType // METHOD_PARAMETER_IN.IS_VARIADIC
+    nodePropertyDescriptors(2605) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2956) = FormalQtyType.IntType // METHOD_PARAMETER_IN.LINE_NUMBER
+    nodePropertyDescriptors(2957) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3396) = FormalQtyType.StringType // METHOD_PARAMETER_IN.NAME
+    nodePropertyDescriptors(3397) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3484) = FormalQtyType.IntType // METHOD_PARAMETER_IN.OFFSET
+    nodePropertyDescriptors(3485) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3572) = FormalQtyType.IntType // METHOD_PARAMETER_IN.OFFSET_END
+    nodePropertyDescriptors(3573) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3660) = FormalQtyType.IntType // METHOD_PARAMETER_IN.ORDER
+    nodePropertyDescriptors(3661) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3924) = FormalQtyType.StringType // METHOD_PARAMETER_IN.POSSIBLE_TYPES
+    nodePropertyDescriptors(3925) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4276) = FormalQtyType.StringType // METHOD_PARAMETER_IN.TYPE_FULL_NAME
+    nodePropertyDescriptors(4277) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(670) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.CODE
+    nodePropertyDescriptors(671) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(758) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.COLUMN_NUMBER
+    nodePropertyDescriptors(759) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1462) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.EVALUATION_STRATEGY
+    nodePropertyDescriptors(1463) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2254) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.INDEX
+    nodePropertyDescriptors(2255) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2606) = FormalQtyType.BoolType // METHOD_PARAMETER_OUT.IS_VARIADIC
+    nodePropertyDescriptors(2607) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2958) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.LINE_NUMBER
+    nodePropertyDescriptors(2959) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3398) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.NAME
+    nodePropertyDescriptors(3399) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3486) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.OFFSET
+    nodePropertyDescriptors(3487) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3574) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.OFFSET_END
+    nodePropertyDescriptors(3575) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3662) = FormalQtyType.IntType // METHOD_PARAMETER_OUT.ORDER
+    nodePropertyDescriptors(3663) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4278) = FormalQtyType.StringType // METHOD_PARAMETER_OUT.TYPE_FULL_NAME
+    nodePropertyDescriptors(4279) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(144) = FormalQtyType.IntType // METHOD_REF.ARGUMENT_INDEX
+    nodePropertyDescriptors(145) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(232) = FormalQtyType.StringType // METHOD_REF.ARGUMENT_NAME
+    nodePropertyDescriptors(233) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(672) = FormalQtyType.StringType // METHOD_REF.CODE
+    nodePropertyDescriptors(673) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(760) = FormalQtyType.IntType // METHOD_REF.COLUMN_NUMBER
+    nodePropertyDescriptors(761) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1376) = FormalQtyType.StringType // METHOD_REF.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1377) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2960) = FormalQtyType.IntType // METHOD_REF.LINE_NUMBER
+    nodePropertyDescriptors(2961) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3136) = FormalQtyType.StringType // METHOD_REF.METHOD_FULL_NAME
+    nodePropertyDescriptors(3137) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3488) = FormalQtyType.IntType // METHOD_REF.OFFSET
+    nodePropertyDescriptors(3489) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3576) = FormalQtyType.IntType // METHOD_REF.OFFSET_END
+    nodePropertyDescriptors(3577) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3664) = FormalQtyType.IntType // METHOD_REF.ORDER
+    nodePropertyDescriptors(3665) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3928) = FormalQtyType.StringType // METHOD_REF.POSSIBLE_TYPES
+    nodePropertyDescriptors(3929) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4280) = FormalQtyType.StringType // METHOD_REF.TYPE_FULL_NAME
+    nodePropertyDescriptors(4281) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(674) = FormalQtyType.StringType // METHOD_RETURN.CODE
+    nodePropertyDescriptors(675) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(762) = FormalQtyType.IntType // METHOD_RETURN.COLUMN_NUMBER
+    nodePropertyDescriptors(763) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1378) = FormalQtyType.StringType // METHOD_RETURN.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1379) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(1466) = FormalQtyType.StringType // METHOD_RETURN.EVALUATION_STRATEGY
+    nodePropertyDescriptors(1467) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2962) = FormalQtyType.IntType // METHOD_RETURN.LINE_NUMBER
+    nodePropertyDescriptors(2963) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3490) = FormalQtyType.IntType // METHOD_RETURN.OFFSET
+    nodePropertyDescriptors(3491) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3578) = FormalQtyType.IntType // METHOD_RETURN.OFFSET_END
+    nodePropertyDescriptors(3579) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3666) = FormalQtyType.IntType // METHOD_RETURN.ORDER
+    nodePropertyDescriptors(3667) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3930) = FormalQtyType.StringType // METHOD_RETURN.POSSIBLE_TYPES
+    nodePropertyDescriptors(3931) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4282) = FormalQtyType.StringType // METHOD_RETURN.TYPE_FULL_NAME
+    nodePropertyDescriptors(4283) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(676) = FormalQtyType.StringType // MODIFIER.CODE
+    nodePropertyDescriptors(677) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(764) = FormalQtyType.IntType // MODIFIER.COLUMN_NUMBER
+    nodePropertyDescriptors(765) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2964) = FormalQtyType.IntType // MODIFIER.LINE_NUMBER
+    nodePropertyDescriptors(2965) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3228) = FormalQtyType.StringType // MODIFIER.MODIFIER_TYPE
+    nodePropertyDescriptors(3229) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3492) = FormalQtyType.IntType // MODIFIER.OFFSET
+    nodePropertyDescriptors(3493) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3580) = FormalQtyType.IntType // MODIFIER.OFFSET_END
+    nodePropertyDescriptors(3581) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3668) = FormalQtyType.IntType // MODIFIER.ORDER
+    nodePropertyDescriptors(3669) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3318) = FormalQtyType.StringType // MYNODETYPE.MYPROPERTY
+    nodePropertyDescriptors(3319) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(680) = FormalQtyType.StringType // NAMESPACE.CODE
+    nodePropertyDescriptors(681) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(768) = FormalQtyType.IntType // NAMESPACE.COLUMN_NUMBER
+    nodePropertyDescriptors(769) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2968) = FormalQtyType.IntType // NAMESPACE.LINE_NUMBER
+    nodePropertyDescriptors(2969) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3408) = FormalQtyType.StringType // NAMESPACE.NAME
+    nodePropertyDescriptors(3409) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3496) = FormalQtyType.IntType // NAMESPACE.OFFSET
+    nodePropertyDescriptors(3497) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3584) = FormalQtyType.IntType // NAMESPACE.OFFSET_END
+    nodePropertyDescriptors(3585) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3672) = FormalQtyType.IntType // NAMESPACE.ORDER
+    nodePropertyDescriptors(3673) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(682) = FormalQtyType.StringType // NAMESPACE_BLOCK.CODE
+    nodePropertyDescriptors(683) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(770) = FormalQtyType.IntType // NAMESPACE_BLOCK.COLUMN_NUMBER
+    nodePropertyDescriptors(771) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1738) = FormalQtyType.StringType // NAMESPACE_BLOCK.FILENAME
+    nodePropertyDescriptors(1739) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1826) = FormalQtyType.StringType // NAMESPACE_BLOCK.FULL_NAME
+    nodePropertyDescriptors(1827) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2970) = FormalQtyType.IntType // NAMESPACE_BLOCK.LINE_NUMBER
+    nodePropertyDescriptors(2971) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3410) = FormalQtyType.StringType // NAMESPACE_BLOCK.NAME
+    nodePropertyDescriptors(3411) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3498) = FormalQtyType.IntType // NAMESPACE_BLOCK.OFFSET
+    nodePropertyDescriptors(3499) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3586) = FormalQtyType.IntType // NAMESPACE_BLOCK.OFFSET_END
+    nodePropertyDescriptors(3587) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3674) = FormalQtyType.IntType // NAMESPACE_BLOCK.ORDER
+    nodePropertyDescriptors(3675) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(156) = FormalQtyType.IntType // RETURN.ARGUMENT_INDEX
+    nodePropertyDescriptors(157) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(244) = FormalQtyType.StringType // RETURN.ARGUMENT_NAME
+    nodePropertyDescriptors(245) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(684) = FormalQtyType.StringType // RETURN.CODE
+    nodePropertyDescriptors(685) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(772) = FormalQtyType.IntType // RETURN.COLUMN_NUMBER
+    nodePropertyDescriptors(773) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2972) = FormalQtyType.IntType // RETURN.LINE_NUMBER
+    nodePropertyDescriptors(2973) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3500) = FormalQtyType.IntType // RETURN.OFFSET
+    nodePropertyDescriptors(3501) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3588) = FormalQtyType.IntType // RETURN.OFFSET_END
+    nodePropertyDescriptors(3589) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3676) = FormalQtyType.IntType // RETURN.ORDER
+    nodePropertyDescriptors(3677) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3414) = FormalQtyType.StringType // TAG.NAME
+    nodePropertyDescriptors(3415) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4382) = FormalQtyType.StringType // TAG.VALUE
+    nodePropertyDescriptors(4383) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4736) = FormalQtyType.RefType // TAG_NODE_PAIR.node
+    nodePropertyDescriptors(4737) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4824) = FormalQtyType.RefType // TAG_NODE_PAIR.tag
+    nodePropertyDescriptors(4825) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(162) = FormalQtyType.IntType // TEMPLATE_DOM.ARGUMENT_INDEX
+    nodePropertyDescriptors(163) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(250) = FormalQtyType.StringType // TEMPLATE_DOM.ARGUMENT_NAME
+    nodePropertyDescriptors(251) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(690) = FormalQtyType.StringType // TEMPLATE_DOM.CODE
+    nodePropertyDescriptors(691) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(778) = FormalQtyType.IntType // TEMPLATE_DOM.COLUMN_NUMBER
+    nodePropertyDescriptors(779) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2978) = FormalQtyType.IntType // TEMPLATE_DOM.LINE_NUMBER
+    nodePropertyDescriptors(2979) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3418) = FormalQtyType.StringType // TEMPLATE_DOM.NAME
+    nodePropertyDescriptors(3419) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3506) = FormalQtyType.IntType // TEMPLATE_DOM.OFFSET
+    nodePropertyDescriptors(3507) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3594) = FormalQtyType.IntType // TEMPLATE_DOM.OFFSET_END
+    nodePropertyDescriptors(3595) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3682) = FormalQtyType.IntType // TEMPLATE_DOM.ORDER
+    nodePropertyDescriptors(3683) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1836) = FormalQtyType.StringType // TYPE.FULL_NAME
+    nodePropertyDescriptors(1837) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3420) = FormalQtyType.StringType // TYPE.NAME
+    nodePropertyDescriptors(3421) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(4212) = FormalQtyType.StringType // TYPE.TYPE_DECL_FULL_NAME
+    nodePropertyDescriptors(4213) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(694) = FormalQtyType.StringType // TYPE_ARGUMENT.CODE
+    nodePropertyDescriptors(695) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(782) = FormalQtyType.IntType // TYPE_ARGUMENT.COLUMN_NUMBER
+    nodePropertyDescriptors(783) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2982) = FormalQtyType.IntType // TYPE_ARGUMENT.LINE_NUMBER
+    nodePropertyDescriptors(2983) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3510) = FormalQtyType.IntType // TYPE_ARGUMENT.OFFSET
+    nodePropertyDescriptors(3511) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3598) = FormalQtyType.IntType // TYPE_ARGUMENT.OFFSET_END
+    nodePropertyDescriptors(3599) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3686) = FormalQtyType.IntType // TYPE_ARGUMENT.ORDER
+    nodePropertyDescriptors(3687) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(80) = FormalQtyType.StringType // TYPE_DECL.ALIAS_TYPE_FULL_NAME
+    nodePropertyDescriptors(81) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(344) = FormalQtyType.StringType // TYPE_DECL.AST_PARENT_FULL_NAME
+    nodePropertyDescriptors(345) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(432) = FormalQtyType.StringType // TYPE_DECL.AST_PARENT_TYPE
+    nodePropertyDescriptors(433) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(696) = FormalQtyType.StringType // TYPE_DECL.CODE
+    nodePropertyDescriptors(697) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(784) = FormalQtyType.IntType // TYPE_DECL.COLUMN_NUMBER
+    nodePropertyDescriptors(785) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1752) = FormalQtyType.StringType // TYPE_DECL.FILENAME
+    nodePropertyDescriptors(1753) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1840) = FormalQtyType.StringType // TYPE_DECL.FULL_NAME
+    nodePropertyDescriptors(1841) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1928) = FormalQtyType.StringType // TYPE_DECL.GENERIC_SIGNATURE
+    nodePropertyDescriptors(1929) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2368) = FormalQtyType.StringType // TYPE_DECL.INHERITS_FROM_TYPE_FULL_NAME
+    nodePropertyDescriptors(2369) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2544) = FormalQtyType.BoolType // TYPE_DECL.IS_EXTERNAL
+    nodePropertyDescriptors(2545) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(2984) = FormalQtyType.IntType // TYPE_DECL.LINE_NUMBER
+    nodePropertyDescriptors(2985) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3424) = FormalQtyType.StringType // TYPE_DECL.NAME
+    nodePropertyDescriptors(3425) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3512) = FormalQtyType.IntType // TYPE_DECL.OFFSET
+    nodePropertyDescriptors(3513) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3600) = FormalQtyType.IntType // TYPE_DECL.OFFSET_END
+    nodePropertyDescriptors(3601) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3688) = FormalQtyType.IntType // TYPE_DECL.ORDER
+    nodePropertyDescriptors(3689) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(698) = FormalQtyType.StringType // TYPE_PARAMETER.CODE
+    nodePropertyDescriptors(699) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(786) = FormalQtyType.IntType // TYPE_PARAMETER.COLUMN_NUMBER
+    nodePropertyDescriptors(787) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(2986) = FormalQtyType.IntType // TYPE_PARAMETER.LINE_NUMBER
+    nodePropertyDescriptors(2987) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3426) = FormalQtyType.StringType // TYPE_PARAMETER.NAME
+    nodePropertyDescriptors(3427) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3514) = FormalQtyType.IntType // TYPE_PARAMETER.OFFSET
+    nodePropertyDescriptors(3515) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3602) = FormalQtyType.IntType // TYPE_PARAMETER.OFFSET_END
+    nodePropertyDescriptors(3603) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3690) = FormalQtyType.IntType // TYPE_PARAMETER.ORDER
+    nodePropertyDescriptors(3691) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(172) = FormalQtyType.IntType // TYPE_REF.ARGUMENT_INDEX
+    nodePropertyDescriptors(173) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(260) = FormalQtyType.StringType // TYPE_REF.ARGUMENT_NAME
+    nodePropertyDescriptors(261) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(700) = FormalQtyType.StringType // TYPE_REF.CODE
+    nodePropertyDescriptors(701) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(788) = FormalQtyType.IntType // TYPE_REF.COLUMN_NUMBER
+    nodePropertyDescriptors(789) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(1404) = FormalQtyType.StringType // TYPE_REF.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1405) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2988) = FormalQtyType.IntType // TYPE_REF.LINE_NUMBER
+    nodePropertyDescriptors(2989) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3516) = FormalQtyType.IntType // TYPE_REF.OFFSET
+    nodePropertyDescriptors(3517) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3604) = FormalQtyType.IntType // TYPE_REF.OFFSET_END
+    nodePropertyDescriptors(3605) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3692) = FormalQtyType.IntType // TYPE_REF.ORDER
+    nodePropertyDescriptors(3693) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3956) = FormalQtyType.StringType // TYPE_REF.POSSIBLE_TYPES
+    nodePropertyDescriptors(3957) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4308) = FormalQtyType.StringType // TYPE_REF.TYPE_FULL_NAME
+    nodePropertyDescriptors(4309) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(174) = FormalQtyType.IntType // UNKNOWN.ARGUMENT_INDEX
+    nodePropertyDescriptors(175) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(262) = FormalQtyType.StringType // UNKNOWN.ARGUMENT_NAME
+    nodePropertyDescriptors(263) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(702) = FormalQtyType.StringType // UNKNOWN.CODE
+    nodePropertyDescriptors(703) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(790) = FormalQtyType.IntType // UNKNOWN.COLUMN_NUMBER
+    nodePropertyDescriptors(791) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(966) = FormalQtyType.StringType // UNKNOWN.CONTAINED_REF
+    nodePropertyDescriptors(967) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(1406) = FormalQtyType.StringType // UNKNOWN.DYNAMIC_TYPE_HINT_FULL_NAME
+    nodePropertyDescriptors(1407) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(2990) = FormalQtyType.IntType // UNKNOWN.LINE_NUMBER
+    nodePropertyDescriptors(2991) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3518) = FormalQtyType.IntType // UNKNOWN.OFFSET
+    nodePropertyDescriptors(3519) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3606) = FormalQtyType.IntType // UNKNOWN.OFFSET_END
+    nodePropertyDescriptors(3607) = FormalQtyType.QtyOption
+    nodePropertyDescriptors(3694) = FormalQtyType.IntType // UNKNOWN.ORDER
+    nodePropertyDescriptors(3695) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3870) = FormalQtyType.StringType // UNKNOWN.PARSER_TYPE_NAME
+    nodePropertyDescriptors(3871) = FormalQtyType.QtyOne
+    nodePropertyDescriptors(3958) = FormalQtyType.StringType // UNKNOWN.POSSIBLE_TYPES
+    nodePropertyDescriptors(3959) = FormalQtyType.QtyMulti
+    nodePropertyDescriptors(4310) = FormalQtyType.StringType // UNKNOWN.TYPE_FULL_NAME
+    nodePropertyDescriptors(4311) = FormalQtyType.QtyOne
     nodePropertyDescriptors
   }
   private val newNodeInsertionHelpers: Array[flatgraph.NewNodePropertyInsertionHelper] = {
-    val _newNodeInserters = new Array[flatgraph.NewNodePropertyInsertionHelper](5490)
-    _newNodeInserters(90) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_argumentIndex
-    _newNodeInserters(180) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_argumentName
-    _newNodeInserters(900) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_code
-    _newNodeInserters(990) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_columnNumber
-    _newNodeInserters(1980) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_fullName
-    _newNodeInserters(3150) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_lineNumber
-    _newNodeInserters(3690) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_name
-    _newNodeInserters(4050) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_order
-    _newNodeInserters(92) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_argumentIndex
-    _newNodeInserters(182) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_argumentName
-    _newNodeInserters(902) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_code
-    _newNodeInserters(992) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_columnNumber
-    _newNodeInserters(3152) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_lineNumber
-    _newNodeInserters(3692) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_name
-    _newNodeInserters(4052) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_order
-    _newNodeInserters(904) = nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_code
-    _newNodeInserters(994) =
+    val _newNodeInserters = new Array[flatgraph.NewNodePropertyInsertionHelper](4840)
+    _newNodeInserters(88) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_argumentIndex
+    _newNodeInserters(176) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_argumentName
+    _newNodeInserters(616) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_code
+    _newNodeInserters(704) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_columnNumber
+    _newNodeInserters(1760) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_fullName
+    _newNodeInserters(2904) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_lineNumber
+    _newNodeInserters(3344) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_name
+    _newNodeInserters(3432) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_offset
+    _newNodeInserters(3520) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_offsetEnd
+    _newNodeInserters(3608) = nodes.NewAnnotation.InsertionHelpers.NewNodeInserter_Annotation_order
+    _newNodeInserters(90) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_argumentIndex
+    _newNodeInserters(178) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_argumentName
+    _newNodeInserters(618) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_code
+    _newNodeInserters(706) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_columnNumber
+    _newNodeInserters(2906) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_lineNumber
+    _newNodeInserters(3346) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_name
+    _newNodeInserters(3434) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_offset
+    _newNodeInserters(3522) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_offsetEnd
+    _newNodeInserters(3610) = nodes.NewAnnotationLiteral.InsertionHelpers.NewNodeInserter_AnnotationLiteral_order
+    _newNodeInserters(620) = nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_code
+    _newNodeInserters(708) =
       nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_columnNumber
-    _newNodeInserters(3154) =
+    _newNodeInserters(2908) =
       nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_lineNumber
-    _newNodeInserters(4054) = nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_order
-    _newNodeInserters(906) =
+    _newNodeInserters(3436) = nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_offset
+    _newNodeInserters(3524) =
+      nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_offsetEnd
+    _newNodeInserters(3612) = nodes.NewAnnotationParameter.InsertionHelpers.NewNodeInserter_AnnotationParameter_order
+    _newNodeInserters(622) =
       nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_code
-    _newNodeInserters(996) =
+    _newNodeInserters(710) =
       nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_columnNumber
-    _newNodeInserters(3156) =
+    _newNodeInserters(2910) =
       nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_lineNumber
-    _newNodeInserters(4056) =
+    _newNodeInserters(3438) =
+      nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_offset
+    _newNodeInserters(3526) =
+      nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_offsetEnd
+    _newNodeInserters(3614) =
       nodes.NewAnnotationParameterAssign.InsertionHelpers.NewNodeInserter_AnnotationParameterAssign_order
-    _newNodeInserters(98) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_argumentIndex
-    _newNodeInserters(188) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_argumentName
-    _newNodeInserters(908) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_code
-    _newNodeInserters(998) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_columnNumber
-    _newNodeInserters(3158) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_lineNumber
-    _newNodeInserters(4058) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_order
-    _newNodeInserters(3340) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_methodFullName
-    _newNodeInserters(3700) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_name
-    _newNodeInserters(4600) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_signature
-    _newNodeInserters(102) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_argumentIndex
-    _newNodeInserters(192) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_argumentName
-    _newNodeInserters(912) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_code
-    _newNodeInserters(1002) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_columnNumber
-    _newNodeInserters(1632) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_dynamicTypeHintFullName
-    _newNodeInserters(3162) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_lineNumber
-    _newNodeInserters(4062) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_order
-    _newNodeInserters(4422) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_possibleTypes
-    _newNodeInserters(4872) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_typeFullName
-    _newNodeInserters(104) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_argumentIndex
-    _newNodeInserters(194) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_argumentName
-    _newNodeInserters(914) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_code
-    _newNodeInserters(1004) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_columnNumber
-    _newNodeInserters(1544) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_dispatchType
-    _newNodeInserters(1634) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_dynamicTypeHintFullName
-    _newNodeInserters(3164) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_lineNumber
-    _newNodeInserters(3344) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_methodFullName
-    _newNodeInserters(3704) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_name
-    _newNodeInserters(4064) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_order
-    _newNodeInserters(4424) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_possibleTypes
-    _newNodeInserters(4604) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_signature
-    _newNodeInserters(4874) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_typeFullName
-    _newNodeInserters(736) = nodes.NewClosureBinding.InsertionHelpers.NewNodeInserter_ClosureBinding_closureBindingId
-    _newNodeInserters(826) = nodes.NewClosureBinding.InsertionHelpers.NewNodeInserter_ClosureBinding_closureOriginalName
-    _newNodeInserters(1726) = nodes.NewClosureBinding.InsertionHelpers.NewNodeInserter_ClosureBinding_evaluationStrategy
-    _newNodeInserters(918) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_code
-    _newNodeInserters(1008) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_columnNumber
-    _newNodeInserters(1908) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_filename
-    _newNodeInserters(3168) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_lineNumber
-    _newNodeInserters(4068) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_order
-    _newNodeInserters(1280) = nodes.NewConfigFile.InsertionHelpers.NewNodeInserter_ConfigFile_content
-    _newNodeInserters(3710) = nodes.NewConfigFile.InsertionHelpers.NewNodeInserter_ConfigFile_name
-    _newNodeInserters(112) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_argumentIndex
-    _newNodeInserters(202) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_argumentName
-    _newNodeInserters(922) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_code
-    _newNodeInserters(1012) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_columnNumber
-    _newNodeInserters(1372) =
+    _newNodeInserters(96) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_argumentIndex
+    _newNodeInserters(184) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_argumentName
+    _newNodeInserters(624) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_code
+    _newNodeInserters(712) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_columnNumber
+    _newNodeInserters(2912) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_lineNumber
+    _newNodeInserters(3440) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_offset
+    _newNodeInserters(3528) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_offsetEnd
+    _newNodeInserters(3616) = nodes.NewArrayInitializer.InsertionHelpers.NewNodeInserter_ArrayInitializer_order
+    _newNodeInserters(3090) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_methodFullName
+    _newNodeInserters(3354) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_name
+    _newNodeInserters(4058) = nodes.NewBinding.InsertionHelpers.NewNodeInserter_Binding_signature
+    _newNodeInserters(100) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_argumentIndex
+    _newNodeInserters(188) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_argumentName
+    _newNodeInserters(628) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_code
+    _newNodeInserters(716) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_columnNumber
+    _newNodeInserters(1332) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_dynamicTypeHintFullName
+    _newNodeInserters(2916) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_lineNumber
+    _newNodeInserters(3444) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_offset
+    _newNodeInserters(3532) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_offsetEnd
+    _newNodeInserters(3620) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_order
+    _newNodeInserters(3884) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_possibleTypes
+    _newNodeInserters(4236) = nodes.NewBlock.InsertionHelpers.NewNodeInserter_Block_typeFullName
+    _newNodeInserters(102) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_argumentIndex
+    _newNodeInserters(190) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_argumentName
+    _newNodeInserters(630) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_code
+    _newNodeInserters(718) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_columnNumber
+    _newNodeInserters(1246) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_dispatchType
+    _newNodeInserters(1334) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_dynamicTypeHintFullName
+    _newNodeInserters(2918) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_lineNumber
+    _newNodeInserters(3094) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_methodFullName
+    _newNodeInserters(3358) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_name
+    _newNodeInserters(3446) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_offset
+    _newNodeInserters(3534) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_offsetEnd
+    _newNodeInserters(3622) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_order
+    _newNodeInserters(3886) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_possibleTypes
+    _newNodeInserters(4062) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_signature
+    _newNodeInserters(4238) = nodes.NewCall.InsertionHelpers.NewNodeInserter_Call_typeFullName
+    _newNodeInserters(544) = nodes.NewClosureBinding.InsertionHelpers.NewNodeInserter_ClosureBinding_closureBindingId
+    _newNodeInserters(1424) = nodes.NewClosureBinding.InsertionHelpers.NewNodeInserter_ClosureBinding_evaluationStrategy
+    _newNodeInserters(634) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_code
+    _newNodeInserters(722) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_columnNumber
+    _newNodeInserters(1690) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_filename
+    _newNodeInserters(2922) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_lineNumber
+    _newNodeInserters(3450) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_offset
+    _newNodeInserters(3538) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_offsetEnd
+    _newNodeInserters(3626) = nodes.NewComment.InsertionHelpers.NewNodeInserter_Comment_order
+    _newNodeInserters(988) = nodes.NewConfigFile.InsertionHelpers.NewNodeInserter_ConfigFile_content
+    _newNodeInserters(3364) = nodes.NewConfigFile.InsertionHelpers.NewNodeInserter_ConfigFile_name
+    _newNodeInserters(110) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_argumentIndex
+    _newNodeInserters(198) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_argumentName
+    _newNodeInserters(638) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_code
+    _newNodeInserters(726) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_columnNumber
+    _newNodeInserters(1078) =
       nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_controlStructureType
-    _newNodeInserters(3172) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_lineNumber
-    _newNodeInserters(4072) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_order
-    _newNodeInserters(4342) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_parserTypeName
-    _newNodeInserters(1464) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_dependencyGroupId
-    _newNodeInserters(3714) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_name
-    _newNodeInserters(5064) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_version
-    _newNodeInserters(116) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_argumentIndex
-    _newNodeInserters(206) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_argumentName
-    _newNodeInserters(476) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_canonicalName
-    _newNodeInserters(926) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_code
-    _newNodeInserters(1016) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_columnNumber
-    _newNodeInserters(3176) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_lineNumber
-    _newNodeInserters(4076) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_order
-    _newNodeInserters(928) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_code
-    _newNodeInserters(1018) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_columnNumber
-    _newNodeInserters(1288) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_content
-    _newNodeInserters(2188) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_hash
-    _newNodeInserters(3178) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_lineNumber
-    _newNodeInserters(3718) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_name
-    _newNodeInserters(4078) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_order
-    _newNodeInserters(5160) = nodes.NewFinding.InsertionHelpers.NewNodeInserter_Finding_evidence
-    _newNodeInserters(5250) = nodes.NewFinding.InsertionHelpers.NewNodeInserter_Finding_keyValuePairs
-    _newNodeInserters(122) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_argumentIndex
-    _newNodeInserters(212) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_argumentName
-    _newNodeInserters(932) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_code
-    _newNodeInserters(1022) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_columnNumber
-    _newNodeInserters(1652) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_dynamicTypeHintFullName
-    _newNodeInserters(3182) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_lineNumber
-    _newNodeInserters(3722) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_name
-    _newNodeInserters(4082) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_order
-    _newNodeInserters(4442) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_possibleTypes
-    _newNodeInserters(4892) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_typeFullName
-    _newNodeInserters(934) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_code
-    _newNodeInserters(1024) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_columnNumber
-    _newNodeInserters(1834) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_explicitAs
-    _newNodeInserters(2284) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_importedAs
-    _newNodeInserters(2374) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_importedEntity
-    _newNodeInserters(2644) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_isExplicit
-    _newNodeInserters(2914) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_isWildcard
-    _newNodeInserters(3184) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_lineNumber
-    _newNodeInserters(4084) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_order
-    _newNodeInserters(936) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_code
-    _newNodeInserters(1026) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_columnNumber
-    _newNodeInserters(3186) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_lineNumber
-    _newNodeInserters(3726) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_name
-    _newNodeInserters(4086) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_order
-    _newNodeInserters(4356) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_parserTypeName
-    _newNodeInserters(128) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_argumentIndex
-    _newNodeInserters(938) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_code
-    _newNodeInserters(1028) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_columnNumber
-    _newNodeInserters(3188) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_lineNumber
-    _newNodeInserters(3728) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_name
-    _newNodeInserters(4088) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_order
-    _newNodeInserters(4358) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_parserTypeName
-    _newNodeInserters(3010) = nodes.NewKeyValuePair.InsertionHelpers.NewNodeInserter_KeyValuePair_key
-    _newNodeInserters(4990) = nodes.NewKeyValuePair.InsertionHelpers.NewNodeInserter_KeyValuePair_value
-    _newNodeInserters(132) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_argumentIndex
-    _newNodeInserters(222) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_argumentName
-    _newNodeInserters(942) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_code
-    _newNodeInserters(1032) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_columnNumber
-    _newNodeInserters(1662) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_dynamicTypeHintFullName
-    _newNodeInserters(3192) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_lineNumber
-    _newNodeInserters(4092) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_order
-    _newNodeInserters(4452) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_possibleTypes
-    _newNodeInserters(4902) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_typeFullName
-    _newNodeInserters(764) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_closureBindingId
-    _newNodeInserters(944) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_code
-    _newNodeInserters(1034) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_columnNumber
-    _newNodeInserters(1664) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_dynamicTypeHintFullName
-    _newNodeInserters(2114) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_genericSignature
-    _newNodeInserters(3194) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_lineNumber
-    _newNodeInserters(3734) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_name
-    _newNodeInserters(4094) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_order
-    _newNodeInserters(4454) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_possibleTypes
-    _newNodeInserters(4904) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_typeFullName
-    _newNodeInserters(586) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_className
-    _newNodeInserters(676) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_classShortName
-    _newNodeInserters(1936) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_filename
-    _newNodeInserters(3196) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_lineNumber
-    _newNodeInserters(3376) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_methodFullName
-    _newNodeInserters(3466) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_methodShortName
-    _newNodeInserters(3826) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_nodeLabel
-    _newNodeInserters(4276) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_packageName
-    _newNodeInserters(4726) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_symbol
-    _newNodeInserters(5356) = nodes.NewLocation.InsertionHelpers.NewNodeInserter_Location_node
-    _newNodeInserters(318) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_astParentFullName
-    _newNodeInserters(408) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_astParentType
-    _newNodeInserters(948) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_code
-    _newNodeInserters(1038) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_columnNumber
-    _newNodeInserters(1668) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_dynamicTypeHintFullName
-    _newNodeInserters(2118) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_genericSignature
-    _newNodeInserters(3198) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_lineNumber
-    _newNodeInserters(3738) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_name
-    _newNodeInserters(4098) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_order
-    _newNodeInserters(4458) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_possibleTypes
-    _newNodeInserters(4908) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_typeFullName
-    _newNodeInserters(2210) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_hash
-    _newNodeInserters(3110) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_language
-    _newNodeInserters(4190) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_overlays
-    _newNodeInserters(4550) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_root
-    _newNodeInserters(5090) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_version
-    _newNodeInserters(322) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_astParentFullName
-    _newNodeInserters(412) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_astParentType
-    _newNodeInserters(952) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_code
-    _newNodeInserters(1042) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_columnNumber
-    _newNodeInserters(1132) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_columnNumberEnd
-    _newNodeInserters(1942) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_filename
-    _newNodeInserters(2032) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_fullName
-    _newNodeInserters(2122) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_genericSignature
-    _newNodeInserters(2212) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_hash
-    _newNodeInserters(2752) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_isExternal
-    _newNodeInserters(3202) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_lineNumber
-    _newNodeInserters(3292) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_lineNumberEnd
-    _newNodeInserters(3742) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_name
-    _newNodeInserters(3922) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_offset
-    _newNodeInserters(4012) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_offsetEnd
-    _newNodeInserters(4102) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_order
-    _newNodeInserters(4642) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_signature
-    _newNodeInserters(774) =
+    _newNodeInserters(2926) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_lineNumber
+    _newNodeInserters(3454) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_offset
+    _newNodeInserters(3542) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_offsetEnd
+    _newNodeInserters(3630) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_order
+    _newNodeInserters(3806) = nodes.NewControlStructure.InsertionHelpers.NewNodeInserter_ControlStructure_parserTypeName
+    _newNodeInserters(1168) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_dependencyGroupId
+    _newNodeInserters(3368) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_name
+    _newNodeInserters(4424) = nodes.NewDependency.InsertionHelpers.NewNodeInserter_Dependency_version
+    _newNodeInserters(114) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_argumentIndex
+    _newNodeInserters(202) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_argumentName
+    _newNodeInserters(466) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_canonicalName
+    _newNodeInserters(642) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_code
+    _newNodeInserters(730) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_columnNumber
+    _newNodeInserters(2930) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_lineNumber
+    _newNodeInserters(3458) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_offset
+    _newNodeInserters(3546) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_offsetEnd
+    _newNodeInserters(3634) = nodes.NewFieldIdentifier.InsertionHelpers.NewNodeInserter_FieldIdentifier_order
+    _newNodeInserters(644) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_code
+    _newNodeInserters(732) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_columnNumber
+    _newNodeInserters(996) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_content
+    _newNodeInserters(1964) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_hash
+    _newNodeInserters(2932) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_lineNumber
+    _newNodeInserters(3372) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_name
+    _newNodeInserters(3460) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_offset
+    _newNodeInserters(3548) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_offsetEnd
+    _newNodeInserters(3636) = nodes.NewFile.InsertionHelpers.NewNodeInserter_File_order
+    _newNodeInserters(1526) = nodes.NewFinding.InsertionHelpers.NewNodeInserter_Finding_evidenceDescription
+    _newNodeInserters(4518) = nodes.NewFinding.InsertionHelpers.NewNodeInserter_Finding_evidence
+    _newNodeInserters(4606) = nodes.NewFinding.InsertionHelpers.NewNodeInserter_Finding_keyValuePairs
+    _newNodeInserters(120) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_argumentIndex
+    _newNodeInserters(208) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_argumentName
+    _newNodeInserters(648) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_code
+    _newNodeInserters(736) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_columnNumber
+    _newNodeInserters(1352) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_dynamicTypeHintFullName
+    _newNodeInserters(2936) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_lineNumber
+    _newNodeInserters(3376) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_name
+    _newNodeInserters(3464) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_offset
+    _newNodeInserters(3552) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_offsetEnd
+    _newNodeInserters(3640) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_order
+    _newNodeInserters(3904) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_possibleTypes
+    _newNodeInserters(4256) = nodes.NewIdentifier.InsertionHelpers.NewNodeInserter_Identifier_typeFullName
+    _newNodeInserters(650) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_code
+    _newNodeInserters(738) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_columnNumber
+    _newNodeInserters(1618) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_explicitAs
+    _newNodeInserters(2058) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_importedAs
+    _newNodeInserters(2146) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_importedEntity
+    _newNodeInserters(2410) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_isExplicit
+    _newNodeInserters(2674) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_isWildcard
+    _newNodeInserters(2938) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_lineNumber
+    _newNodeInserters(3466) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_offset
+    _newNodeInserters(3554) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_offsetEnd
+    _newNodeInserters(3642) = nodes.NewImport.InsertionHelpers.NewNodeInserter_Import_order
+    _newNodeInserters(652) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_code
+    _newNodeInserters(740) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_columnNumber
+    _newNodeInserters(2940) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_lineNumber
+    _newNodeInserters(3380) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_name
+    _newNodeInserters(3468) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_offset
+    _newNodeInserters(3556) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_offsetEnd
+    _newNodeInserters(3644) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_order
+    _newNodeInserters(3820) = nodes.NewJumpLabel.InsertionHelpers.NewNodeInserter_JumpLabel_parserTypeName
+    _newNodeInserters(126) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_argumentIndex
+    _newNodeInserters(654) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_code
+    _newNodeInserters(742) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_columnNumber
+    _newNodeInserters(2942) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_lineNumber
+    _newNodeInserters(3382) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_name
+    _newNodeInserters(3470) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_offset
+    _newNodeInserters(3558) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_offsetEnd
+    _newNodeInserters(3646) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_order
+    _newNodeInserters(3822) = nodes.NewJumpTarget.InsertionHelpers.NewNodeInserter_JumpTarget_parserTypeName
+    _newNodeInserters(2768) = nodes.NewKeyValuePair.InsertionHelpers.NewNodeInserter_KeyValuePair_key
+    _newNodeInserters(4352) = nodes.NewKeyValuePair.InsertionHelpers.NewNodeInserter_KeyValuePair_value
+    _newNodeInserters(130) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_argumentIndex
+    _newNodeInserters(218) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_argumentName
+    _newNodeInserters(658) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_code
+    _newNodeInserters(746) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_columnNumber
+    _newNodeInserters(1362) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_dynamicTypeHintFullName
+    _newNodeInserters(2946) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_lineNumber
+    _newNodeInserters(3474) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_offset
+    _newNodeInserters(3562) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_offsetEnd
+    _newNodeInserters(3650) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_order
+    _newNodeInserters(3914) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_possibleTypes
+    _newNodeInserters(4266) = nodes.NewLiteral.InsertionHelpers.NewNodeInserter_Literal_typeFullName
+    _newNodeInserters(572) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_closureBindingId
+    _newNodeInserters(660) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_code
+    _newNodeInserters(748) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_columnNumber
+    _newNodeInserters(1364) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_dynamicTypeHintFullName
+    _newNodeInserters(1892) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_genericSignature
+    _newNodeInserters(2948) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_lineNumber
+    _newNodeInserters(3388) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_name
+    _newNodeInserters(3476) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_offset
+    _newNodeInserters(3564) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_offsetEnd
+    _newNodeInserters(3652) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_order
+    _newNodeInserters(3916) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_possibleTypes
+    _newNodeInserters(4268) = nodes.NewLocal.InsertionHelpers.NewNodeInserter_Local_typeFullName
+    _newNodeInserters(310) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_astParentFullName
+    _newNodeInserters(398) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_astParentType
+    _newNodeInserters(662) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_code
+    _newNodeInserters(750) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_columnNumber
+    _newNodeInserters(1366) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_dynamicTypeHintFullName
+    _newNodeInserters(1894) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_genericSignature
+    _newNodeInserters(2950) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_lineNumber
+    _newNodeInserters(3390) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_name
+    _newNodeInserters(3478) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_offset
+    _newNodeInserters(3566) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_offsetEnd
+    _newNodeInserters(3654) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_order
+    _newNodeInserters(3918) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_possibleTypes
+    _newNodeInserters(4270) = nodes.NewMember.InsertionHelpers.NewNodeInserter_Member_typeFullName
+    _newNodeInserters(1984) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_hash
+    _newNodeInserters(2864) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_language
+    _newNodeInserters(3744) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_overlays
+    _newNodeInserters(4008) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_root
+    _newNodeInserters(4448) = nodes.NewMetaData.InsertionHelpers.NewNodeInserter_MetaData_version
+    _newNodeInserters(314) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_astParentFullName
+    _newNodeInserters(402) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_astParentType
+    _newNodeInserters(666) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_code
+    _newNodeInserters(754) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_columnNumber
+    _newNodeInserters(842) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_columnNumberEnd
+    _newNodeInserters(1722) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_filename
+    _newNodeInserters(1810) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_fullName
+    _newNodeInserters(1898) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_genericSignature
+    _newNodeInserters(1986) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_hash
+    _newNodeInserters(2514) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_isExternal
+    _newNodeInserters(2954) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_lineNumber
+    _newNodeInserters(3042) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_lineNumberEnd
+    _newNodeInserters(3394) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_name
+    _newNodeInserters(3482) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_offset
+    _newNodeInserters(3570) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_offsetEnd
+    _newNodeInserters(3658) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_order
+    _newNodeInserters(4098) = nodes.NewMethod.InsertionHelpers.NewNodeInserter_Method_signature
+    _newNodeInserters(580) =
       nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_closureBindingId
-    _newNodeInserters(954) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_code
-    _newNodeInserters(1044) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_columnNumber
-    _newNodeInserters(1674) =
+    _newNodeInserters(668) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_code
+    _newNodeInserters(756) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_columnNumber
+    _newNodeInserters(1372) =
       nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_dynamicTypeHintFullName
-    _newNodeInserters(1764) =
+    _newNodeInserters(1460) =
       nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_evaluationStrategy
-    _newNodeInserters(2484) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_index
-    _newNodeInserters(2844) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_isVariadic
-    _newNodeInserters(3204) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_lineNumber
-    _newNodeInserters(3744) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_name
-    _newNodeInserters(4104) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_order
-    _newNodeInserters(4464) =
+    _newNodeInserters(2252) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_index
+    _newNodeInserters(2604) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_isVariadic
+    _newNodeInserters(2956) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_lineNumber
+    _newNodeInserters(3396) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_name
+    _newNodeInserters(3484) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_offset
+    _newNodeInserters(3572) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_offsetEnd
+    _newNodeInserters(3660) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_order
+    _newNodeInserters(3924) =
       nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_possibleTypes
-    _newNodeInserters(4914) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_typeFullName
-    _newNodeInserters(956) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_code
-    _newNodeInserters(1046) =
+    _newNodeInserters(4276) = nodes.NewMethodParameterIn.InsertionHelpers.NewNodeInserter_MethodParameterIn_typeFullName
+    _newNodeInserters(670) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_code
+    _newNodeInserters(758) =
       nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_columnNumber
-    _newNodeInserters(1766) =
+    _newNodeInserters(1462) =
       nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_evaluationStrategy
-    _newNodeInserters(2486) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_index
-    _newNodeInserters(2846) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_isVariadic
-    _newNodeInserters(3206) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_lineNumber
-    _newNodeInserters(3746) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_name
-    _newNodeInserters(4106) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_order
-    _newNodeInserters(4916) =
+    _newNodeInserters(2254) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_index
+    _newNodeInserters(2606) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_isVariadic
+    _newNodeInserters(2958) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_lineNumber
+    _newNodeInserters(3398) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_name
+    _newNodeInserters(3486) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_offset
+    _newNodeInserters(3574) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_offsetEnd
+    _newNodeInserters(3662) = nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_order
+    _newNodeInserters(4278) =
       nodes.NewMethodParameterOut.InsertionHelpers.NewNodeInserter_MethodParameterOut_typeFullName
-    _newNodeInserters(148) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_argumentIndex
-    _newNodeInserters(238) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_argumentName
-    _newNodeInserters(958) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_code
-    _newNodeInserters(1048) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_columnNumber
-    _newNodeInserters(1678) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_dynamicTypeHintFullName
-    _newNodeInserters(3208) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_lineNumber
-    _newNodeInserters(3388) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_methodFullName
-    _newNodeInserters(4108) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_order
-    _newNodeInserters(4468) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_possibleTypes
-    _newNodeInserters(4918) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_typeFullName
-    _newNodeInserters(960) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_code
-    _newNodeInserters(1050) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_columnNumber
-    _newNodeInserters(1680) =
+    _newNodeInserters(144) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_argumentIndex
+    _newNodeInserters(232) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_argumentName
+    _newNodeInserters(672) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_code
+    _newNodeInserters(760) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_columnNumber
+    _newNodeInserters(1376) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_dynamicTypeHintFullName
+    _newNodeInserters(2960) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_lineNumber
+    _newNodeInserters(3136) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_methodFullName
+    _newNodeInserters(3488) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_offset
+    _newNodeInserters(3576) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_offsetEnd
+    _newNodeInserters(3664) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_order
+    _newNodeInserters(3928) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_possibleTypes
+    _newNodeInserters(4280) = nodes.NewMethodRef.InsertionHelpers.NewNodeInserter_MethodRef_typeFullName
+    _newNodeInserters(674) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_code
+    _newNodeInserters(762) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_columnNumber
+    _newNodeInserters(1378) =
       nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_dynamicTypeHintFullName
-    _newNodeInserters(1770) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_evaluationStrategy
-    _newNodeInserters(3210) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_lineNumber
-    _newNodeInserters(4110) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_order
-    _newNodeInserters(4470) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_possibleTypes
-    _newNodeInserters(4920) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_typeFullName
-    _newNodeInserters(962) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_code
-    _newNodeInserters(1052) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_columnNumber
-    _newNodeInserters(3212) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_lineNumber
-    _newNodeInserters(3572) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_modifierType
-    _newNodeInserters(4112) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_order
-    _newNodeInserters(3664) = nodes.NewMynodetype.InsertionHelpers.NewNodeInserter_Mynodetype_myproperty
-    _newNodeInserters(966) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_code
-    _newNodeInserters(1056) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_columnNumber
-    _newNodeInserters(3216) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_lineNumber
-    _newNodeInserters(3756) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_name
-    _newNodeInserters(4116) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_order
-    _newNodeInserters(968) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_code
-    _newNodeInserters(1058) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_columnNumber
-    _newNodeInserters(1958) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_filename
-    _newNodeInserters(2048) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_fullName
-    _newNodeInserters(3218) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_lineNumber
-    _newNodeInserters(3758) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_name
-    _newNodeInserters(4118) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_order
-    _newNodeInserters(160) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_argumentIndex
-    _newNodeInserters(250) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_argumentName
-    _newNodeInserters(970) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_code
-    _newNodeInserters(1060) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_columnNumber
-    _newNodeInserters(3220) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_lineNumber
-    _newNodeInserters(4120) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_order
-    _newNodeInserters(3762) = nodes.NewTag.InsertionHelpers.NewNodeInserter_Tag_name
-    _newNodeInserters(5022) = nodes.NewTag.InsertionHelpers.NewNodeInserter_Tag_value
-    _newNodeInserters(5384) = nodes.NewTagNodePair.InsertionHelpers.NewNodeInserter_TagNodePair_node
-    _newNodeInserters(5474) = nodes.NewTagNodePair.InsertionHelpers.NewNodeInserter_TagNodePair_tag
-    _newNodeInserters(166) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_argumentIndex
-    _newNodeInserters(256) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_argumentName
-    _newNodeInserters(976) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_code
-    _newNodeInserters(1066) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_columnNumber
-    _newNodeInserters(3226) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_lineNumber
-    _newNodeInserters(3766) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_name
-    _newNodeInserters(4126) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_order
-    _newNodeInserters(2058) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_fullName
-    _newNodeInserters(3768) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_name
-    _newNodeInserters(4848) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_typeDeclFullName
-    _newNodeInserters(980) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_code
-    _newNodeInserters(1070) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_columnNumber
-    _newNodeInserters(3230) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_lineNumber
-    _newNodeInserters(4130) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_order
-    _newNodeInserters(82) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_aliasTypeFullName
-    _newNodeInserters(352) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_astParentFullName
-    _newNodeInserters(442) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_astParentType
-    _newNodeInserters(982) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_code
-    _newNodeInserters(1072) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_columnNumber
-    _newNodeInserters(1972) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_filename
-    _newNodeInserters(2062) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_fullName
-    _newNodeInserters(2152) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_genericSignature
-    _newNodeInserters(2602) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_inheritsFromTypeFullName
-    _newNodeInserters(2782) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_isExternal
-    _newNodeInserters(3232) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_lineNumber
-    _newNodeInserters(3772) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_name
-    _newNodeInserters(3952) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_offset
-    _newNodeInserters(4042) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_offsetEnd
-    _newNodeInserters(4132) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_order
-    _newNodeInserters(984) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_code
-    _newNodeInserters(1074) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_columnNumber
-    _newNodeInserters(3234) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_lineNumber
-    _newNodeInserters(3774) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_name
-    _newNodeInserters(4134) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_order
-    _newNodeInserters(176) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_argumentIndex
-    _newNodeInserters(266) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_argumentName
-    _newNodeInserters(986) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_code
-    _newNodeInserters(1076) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_columnNumber
-    _newNodeInserters(1706) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_dynamicTypeHintFullName
-    _newNodeInserters(3236) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_lineNumber
-    _newNodeInserters(4136) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_order
-    _newNodeInserters(4496) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_possibleTypes
-    _newNodeInserters(4946) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_typeFullName
-    _newNodeInserters(178) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_argumentIndex
-    _newNodeInserters(268) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_argumentName
-    _newNodeInserters(988) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_code
-    _newNodeInserters(1078) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_columnNumber
-    _newNodeInserters(1258) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_containedRef
-    _newNodeInserters(1708) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_dynamicTypeHintFullName
-    _newNodeInserters(3238) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_lineNumber
-    _newNodeInserters(4138) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_order
-    _newNodeInserters(4408) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_parserTypeName
-    _newNodeInserters(4498) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_possibleTypes
-    _newNodeInserters(4948) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_typeFullName
+    _newNodeInserters(1466) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_evaluationStrategy
+    _newNodeInserters(2962) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_lineNumber
+    _newNodeInserters(3490) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_offset
+    _newNodeInserters(3578) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_offsetEnd
+    _newNodeInserters(3666) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_order
+    _newNodeInserters(3930) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_possibleTypes
+    _newNodeInserters(4282) = nodes.NewMethodReturn.InsertionHelpers.NewNodeInserter_MethodReturn_typeFullName
+    _newNodeInserters(676) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_code
+    _newNodeInserters(764) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_columnNumber
+    _newNodeInserters(2964) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_lineNumber
+    _newNodeInserters(3228) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_modifierType
+    _newNodeInserters(3492) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_offset
+    _newNodeInserters(3580) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_offsetEnd
+    _newNodeInserters(3668) = nodes.NewModifier.InsertionHelpers.NewNodeInserter_Modifier_order
+    _newNodeInserters(3318) = nodes.NewMynodetype.InsertionHelpers.NewNodeInserter_Mynodetype_myproperty
+    _newNodeInserters(680) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_code
+    _newNodeInserters(768) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_columnNumber
+    _newNodeInserters(2968) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_lineNumber
+    _newNodeInserters(3408) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_name
+    _newNodeInserters(3496) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_offset
+    _newNodeInserters(3584) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_offsetEnd
+    _newNodeInserters(3672) = nodes.NewNamespace.InsertionHelpers.NewNodeInserter_Namespace_order
+    _newNodeInserters(682) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_code
+    _newNodeInserters(770) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_columnNumber
+    _newNodeInserters(1738) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_filename
+    _newNodeInserters(1826) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_fullName
+    _newNodeInserters(2970) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_lineNumber
+    _newNodeInserters(3410) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_name
+    _newNodeInserters(3498) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_offset
+    _newNodeInserters(3586) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_offsetEnd
+    _newNodeInserters(3674) = nodes.NewNamespaceBlock.InsertionHelpers.NewNodeInserter_NamespaceBlock_order
+    _newNodeInserters(156) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_argumentIndex
+    _newNodeInserters(244) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_argumentName
+    _newNodeInserters(684) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_code
+    _newNodeInserters(772) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_columnNumber
+    _newNodeInserters(2972) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_lineNumber
+    _newNodeInserters(3500) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_offset
+    _newNodeInserters(3588) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_offsetEnd
+    _newNodeInserters(3676) = nodes.NewReturn.InsertionHelpers.NewNodeInserter_Return_order
+    _newNodeInserters(3414) = nodes.NewTag.InsertionHelpers.NewNodeInserter_Tag_name
+    _newNodeInserters(4382) = nodes.NewTag.InsertionHelpers.NewNodeInserter_Tag_value
+    _newNodeInserters(4736) = nodes.NewTagNodePair.InsertionHelpers.NewNodeInserter_TagNodePair_node
+    _newNodeInserters(4824) = nodes.NewTagNodePair.InsertionHelpers.NewNodeInserter_TagNodePair_tag
+    _newNodeInserters(162) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_argumentIndex
+    _newNodeInserters(250) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_argumentName
+    _newNodeInserters(690) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_code
+    _newNodeInserters(778) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_columnNumber
+    _newNodeInserters(2978) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_lineNumber
+    _newNodeInserters(3418) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_name
+    _newNodeInserters(3506) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_offset
+    _newNodeInserters(3594) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_offsetEnd
+    _newNodeInserters(3682) = nodes.NewTemplateDom.InsertionHelpers.NewNodeInserter_TemplateDom_order
+    _newNodeInserters(1836) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_fullName
+    _newNodeInserters(3420) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_name
+    _newNodeInserters(4212) = nodes.NewType.InsertionHelpers.NewNodeInserter_Type_typeDeclFullName
+    _newNodeInserters(694) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_code
+    _newNodeInserters(782) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_columnNumber
+    _newNodeInserters(2982) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_lineNumber
+    _newNodeInserters(3510) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_offset
+    _newNodeInserters(3598) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_offsetEnd
+    _newNodeInserters(3686) = nodes.NewTypeArgument.InsertionHelpers.NewNodeInserter_TypeArgument_order
+    _newNodeInserters(80) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_aliasTypeFullName
+    _newNodeInserters(344) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_astParentFullName
+    _newNodeInserters(432) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_astParentType
+    _newNodeInserters(696) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_code
+    _newNodeInserters(784) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_columnNumber
+    _newNodeInserters(1752) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_filename
+    _newNodeInserters(1840) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_fullName
+    _newNodeInserters(1928) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_genericSignature
+    _newNodeInserters(2368) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_inheritsFromTypeFullName
+    _newNodeInserters(2544) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_isExternal
+    _newNodeInserters(2984) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_lineNumber
+    _newNodeInserters(3424) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_name
+    _newNodeInserters(3512) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_offset
+    _newNodeInserters(3600) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_offsetEnd
+    _newNodeInserters(3688) = nodes.NewTypeDecl.InsertionHelpers.NewNodeInserter_TypeDecl_order
+    _newNodeInserters(698) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_code
+    _newNodeInserters(786) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_columnNumber
+    _newNodeInserters(2986) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_lineNumber
+    _newNodeInserters(3426) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_name
+    _newNodeInserters(3514) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_offset
+    _newNodeInserters(3602) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_offsetEnd
+    _newNodeInserters(3690) = nodes.NewTypeParameter.InsertionHelpers.NewNodeInserter_TypeParameter_order
+    _newNodeInserters(172) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_argumentIndex
+    _newNodeInserters(260) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_argumentName
+    _newNodeInserters(700) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_code
+    _newNodeInserters(788) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_columnNumber
+    _newNodeInserters(1404) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_dynamicTypeHintFullName
+    _newNodeInserters(2988) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_lineNumber
+    _newNodeInserters(3516) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_offset
+    _newNodeInserters(3604) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_offsetEnd
+    _newNodeInserters(3692) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_order
+    _newNodeInserters(3956) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_possibleTypes
+    _newNodeInserters(4308) = nodes.NewTypeRef.InsertionHelpers.NewNodeInserter_TypeRef_typeFullName
+    _newNodeInserters(174) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_argumentIndex
+    _newNodeInserters(262) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_argumentName
+    _newNodeInserters(702) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_code
+    _newNodeInserters(790) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_columnNumber
+    _newNodeInserters(966) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_containedRef
+    _newNodeInserters(1406) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_dynamicTypeHintFullName
+    _newNodeInserters(2990) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_lineNumber
+    _newNodeInserters(3518) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_offset
+    _newNodeInserters(3606) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_offsetEnd
+    _newNodeInserters(3694) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_order
+    _newNodeInserters(3870) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_parserTypeName
+    _newNodeInserters(3958) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_possibleTypes
+    _newNodeInserters(4310) = nodes.NewUnknown.InsertionHelpers.NewNodeInserter_Unknown_typeFullName
     _newNodeInserters
   }
-  override def getNumberOfNodeKinds: Int              = 45
+  override def getNumberOfNodeKinds: Int              = 44
   override def getNumberOfEdgeKinds: Int              = 24
   override def getNodeLabel(nodeKind: Int): String    = nodeLabels(nodeKind)
   override def getNodeKindByLabel(label: String): Int = nodeKindByLabel.getOrElse(label, flatgraph.Schema.UndefinedKind)
@@ -1266,13 +1411,34 @@ object GraphSchema extends flatgraph.Schema {
   override def getNodePropertyNames(nodeLabel: String): Set[String] = {
     nodeLabel match {
       case "ANNOTATION" =>
-        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "FULL_NAME", "LINE_NUMBER", "NAME", "ORDER")
+        Set(
+          "ARGUMENT_INDEX",
+          "ARGUMENT_NAME",
+          "CODE",
+          "COLUMN_NUMBER",
+          "FULL_NAME",
+          "LINE_NUMBER",
+          "NAME",
+          "OFFSET",
+          "OFFSET_END",
+          "ORDER"
+        )
       case "ANNOTATION_LITERAL" =>
-        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER")
-      case "ANNOTATION_PARAMETER"        => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
-      case "ANNOTATION_PARAMETER_ASSIGN" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
+        Set(
+          "ARGUMENT_INDEX",
+          "ARGUMENT_NAME",
+          "CODE",
+          "COLUMN_NUMBER",
+          "LINE_NUMBER",
+          "NAME",
+          "OFFSET",
+          "OFFSET_END",
+          "ORDER"
+        )
+      case "ANNOTATION_PARAMETER"        => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
+      case "ANNOTATION_PARAMETER_ASSIGN" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
       case "ARRAY_INITIALIZER" =>
-        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
+        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
       case "BINDING" => Set("METHOD_FULL_NAME", "NAME", "SIGNATURE")
       case "BLOCK" =>
         Set(
@@ -1282,6 +1448,8 @@ object GraphSchema extends flatgraph.Schema {
           "COLUMN_NUMBER",
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1297,13 +1465,15 @@ object GraphSchema extends flatgraph.Schema {
           "LINE_NUMBER",
           "METHOD_FULL_NAME",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "SIGNATURE",
           "TYPE_FULL_NAME"
         )
-      case "CLOSURE_BINDING" => Set("CLOSURE_BINDING_ID", "CLOSURE_ORIGINAL_NAME", "EVALUATION_STRATEGY")
-      case "COMMENT"         => Set("CODE", "COLUMN_NUMBER", "FILENAME", "LINE_NUMBER", "ORDER")
+      case "CLOSURE_BINDING" => Set("CLOSURE_BINDING_ID", "EVALUATION_STRATEGY")
+      case "COMMENT"         => Set("CODE", "COLUMN_NUMBER", "FILENAME", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
       case "CONFIG_FILE"     => Set("CONTENT", "NAME")
       case "CONTROL_STRUCTURE" =>
         Set(
@@ -1313,14 +1483,27 @@ object GraphSchema extends flatgraph.Schema {
           "COLUMN_NUMBER",
           "CONTROL_STRUCTURE_TYPE",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "PARSER_TYPE_NAME"
         )
       case "DEPENDENCY" => Set("DEPENDENCY_GROUP_ID", "NAME", "VERSION")
       case "FIELD_IDENTIFIER" =>
-        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CANONICAL_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
-      case "FILE"    => Set("CODE", "COLUMN_NUMBER", "CONTENT", "HASH", "LINE_NUMBER", "NAME", "ORDER")
-      case "FINDING" => Set()
+        Set(
+          "ARGUMENT_INDEX",
+          "ARGUMENT_NAME",
+          "CANONICAL_NAME",
+          "CODE",
+          "COLUMN_NUMBER",
+          "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
+          "ORDER"
+        )
+      case "FILE" =>
+        Set("CODE", "COLUMN_NUMBER", "CONTENT", "HASH", "LINE_NUMBER", "NAME", "OFFSET", "OFFSET_END", "ORDER")
+      case "FINDING" => Set("EVIDENCE_DESCRIPTION")
       case "IDENTIFIER" =>
         Set(
           "ARGUMENT_INDEX",
@@ -1330,6 +1513,8 @@ object GraphSchema extends flatgraph.Schema {
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1344,11 +1529,24 @@ object GraphSchema extends flatgraph.Schema {
           "IS_EXPLICIT",
           "IS_WILDCARD",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER"
         )
-      case "JUMP_LABEL" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER", "PARSER_TYPE_NAME")
+      case "JUMP_LABEL" =>
+        Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "OFFSET", "OFFSET_END", "ORDER", "PARSER_TYPE_NAME")
       case "JUMP_TARGET" =>
-        Set("ARGUMENT_INDEX", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER", "PARSER_TYPE_NAME")
+        Set(
+          "ARGUMENT_INDEX",
+          "CODE",
+          "COLUMN_NUMBER",
+          "LINE_NUMBER",
+          "NAME",
+          "OFFSET",
+          "OFFSET_END",
+          "ORDER",
+          "PARSER_TYPE_NAME"
+        )
       case "KEY_VALUE_PAIR" => Set("KEY", "VALUE")
       case "LITERAL" =>
         Set(
@@ -1358,6 +1556,8 @@ object GraphSchema extends flatgraph.Schema {
           "COLUMN_NUMBER",
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1371,21 +1571,11 @@ object GraphSchema extends flatgraph.Schema {
           "GENERIC_SIGNATURE",
           "LINE_NUMBER",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
-        )
-      case "LOCATION" =>
-        Set(
-          "CLASS_NAME",
-          "CLASS_SHORT_NAME",
-          "FILENAME",
-          "LINE_NUMBER",
-          "METHOD_FULL_NAME",
-          "METHOD_SHORT_NAME",
-          "NODE_LABEL",
-          "PACKAGE_NAME",
-          "SYMBOL"
         )
       case "MEMBER" =>
         Set(
@@ -1397,6 +1587,8 @@ object GraphSchema extends flatgraph.Schema {
           "GENERIC_SIGNATURE",
           "LINE_NUMBER",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1433,6 +1625,8 @@ object GraphSchema extends flatgraph.Schema {
           "IS_VARIADIC",
           "LINE_NUMBER",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1446,6 +1640,8 @@ object GraphSchema extends flatgraph.Schema {
           "IS_VARIADIC",
           "LINE_NUMBER",
           "NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "TYPE_FULL_NAME"
         )
@@ -1458,6 +1654,8 @@ object GraphSchema extends flatgraph.Schema {
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
           "METHOD_FULL_NAME",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1469,21 +1667,35 @@ object GraphSchema extends flatgraph.Schema {
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "EVALUATION_STRATEGY",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
         )
-      case "MODIFIER"        => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "MODIFIER_TYPE", "ORDER")
-      case "MYNODETYPE"      => Set("MYPROPERTY")
-      case "NAMESPACE"       => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER")
-      case "NAMESPACE_BLOCK" => Set("CODE", "COLUMN_NUMBER", "FILENAME", "FULL_NAME", "LINE_NUMBER", "NAME", "ORDER")
-      case "RETURN"          => Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
-      case "TAG"             => Set("NAME", "VALUE")
-      case "TAG_NODE_PAIR"   => Set()
+      case "MODIFIER"   => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "MODIFIER_TYPE", "OFFSET", "OFFSET_END", "ORDER")
+      case "MYNODETYPE" => Set("MYPROPERTY")
+      case "NAMESPACE"  => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "OFFSET", "OFFSET_END", "ORDER")
+      case "NAMESPACE_BLOCK" =>
+        Set("CODE", "COLUMN_NUMBER", "FILENAME", "FULL_NAME", "LINE_NUMBER", "NAME", "OFFSET", "OFFSET_END", "ORDER")
+      case "RETURN" =>
+        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
+      case "TAG"           => Set("NAME", "VALUE")
+      case "TAG_NODE_PAIR" => Set()
       case "TEMPLATE_DOM" =>
-        Set("ARGUMENT_INDEX", "ARGUMENT_NAME", "CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER")
+        Set(
+          "ARGUMENT_INDEX",
+          "ARGUMENT_NAME",
+          "CODE",
+          "COLUMN_NUMBER",
+          "LINE_NUMBER",
+          "NAME",
+          "OFFSET",
+          "OFFSET_END",
+          "ORDER"
+        )
       case "TYPE"          => Set("FULL_NAME", "NAME", "TYPE_DECL_FULL_NAME")
-      case "TYPE_ARGUMENT" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "ORDER")
+      case "TYPE_ARGUMENT" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "OFFSET", "OFFSET_END", "ORDER")
       case "TYPE_DECL" =>
         Set(
           "ALIAS_TYPE_FULL_NAME",
@@ -1502,7 +1714,7 @@ object GraphSchema extends flatgraph.Schema {
           "OFFSET_END",
           "ORDER"
         )
-      case "TYPE_PARAMETER" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "ORDER")
+      case "TYPE_PARAMETER" => Set("CODE", "COLUMN_NUMBER", "LINE_NUMBER", "NAME", "OFFSET", "OFFSET_END", "ORDER")
       case "TYPE_REF" =>
         Set(
           "ARGUMENT_INDEX",
@@ -1511,6 +1723,8 @@ object GraphSchema extends flatgraph.Schema {
           "COLUMN_NUMBER",
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "POSSIBLE_TYPES",
           "TYPE_FULL_NAME"
@@ -1524,6 +1738,8 @@ object GraphSchema extends flatgraph.Schema {
           "CONTAINED_REF",
           "DYNAMIC_TYPE_HINT_FULL_NAME",
           "LINE_NUMBER",
+          "OFFSET",
+          "OFFSET_END",
           "ORDER",
           "PARSER_TYPE_NAME",
           "POSSIBLE_TYPES",
@@ -1540,18 +1756,17 @@ object GraphSchema extends flatgraph.Schema {
   }
 
   override def getPropertyLabel(nodeKind: Int, propertyKind: Int): String = {
-    if (propertyKind < 57) normalNodePropertyNames(propertyKind)
-    else if (propertyKind == 57 && nodeKind == 15) "evidence"      /*on node FINDING*/
-    else if (propertyKind == 58 && nodeKind == 15) "keyValuePairs" /*on node FINDING*/
-    else if (propertyKind == 59 && nodeKind == 23) "node"          /*on node LOCATION*/
-    else if (propertyKind == 59 && nodeKind == 37) "node"          /*on node TAG_NODE_PAIR*/
-    else if (propertyKind == 60 && nodeKind == 37) "tag"           /*on node TAG_NODE_PAIR*/
+    if (propertyKind < 51) normalNodePropertyNames(propertyKind)
+    else if (propertyKind == 51 && nodeKind == 15) "evidence"      /*on node FINDING*/
+    else if (propertyKind == 52 && nodeKind == 15) "keyValuePairs" /*on node FINDING*/
+    else if (propertyKind == 53 && nodeKind == 36) "node"          /*on node TAG_NODE_PAIR*/
+    else if (propertyKind == 54 && nodeKind == 36) "tag"           /*on node TAG_NODE_PAIR*/
     else null
   }
 
   override def getPropertyKindByName(label: String): Int =
     nodePropertyByLabel.getOrElse(label, flatgraph.Schema.UndefinedKind)
-  override def getNumberOfPropertyKinds: Int = 61
+  override def getNumberOfPropertyKinds: Int = 55
   override def makeNode(graph: flatgraph.Graph, nodeKind: Short, seq: Int): nodes.StoredNode =
     nodeFactories(nodeKind)(graph, seq)
   override def makeEdge(

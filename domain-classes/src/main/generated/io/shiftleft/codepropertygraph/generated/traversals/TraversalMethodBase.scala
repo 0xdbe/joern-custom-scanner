@@ -232,7 +232,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
     case init: flatgraph.misc.InitNodeIterator[flatgraph.GNode @unchecked] if init.isVirgin && init.hasNext =>
       val someNode = init.next
       flatgraph.Accessors
-        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 21, value)
+        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 19, value)
         .asInstanceOf[Iterator[NodeType]]
     case _ => traversal.filter { _.filename == value }
   }
@@ -246,7 +246,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
         val someNode = init.next
         values.iterator.flatMap { value =>
           flatgraph.Accessors
-            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 21, value)
+            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 19, value)
             .asInstanceOf[Iterator[NodeType]]
         }
       case _ =>
@@ -300,7 +300,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
     case init: flatgraph.misc.InitNodeIterator[flatgraph.GNode @unchecked] if init.isVirgin && init.hasNext =>
       val someNode = init.next
       flatgraph.Accessors
-        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 22, value)
+        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 20, value)
         .asInstanceOf[Iterator[NodeType]]
     case _ => traversal.filter { _.fullName == value }
   }
@@ -314,7 +314,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
         val someNode = init.next
         values.iterator.flatMap { value =>
           flatgraph.Accessors
-            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 22, value)
+            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 20, value)
             .asInstanceOf[Iterator[NodeType]]
         }
       case _ =>
@@ -368,7 +368,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
     case init: flatgraph.misc.InitNodeIterator[flatgraph.GNode @unchecked] if init.isVirgin && init.hasNext =>
       val someNode = init.next
       flatgraph.Accessors
-        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 23, value)
+        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 21, value)
         .asInstanceOf[Iterator[NodeType]]
     case _ => traversal.filter { _.genericSignature == value }
   }
@@ -382,7 +382,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
         val someNode = init.next
         values.iterator.flatMap { value =>
           flatgraph.Accessors
-            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 23, value)
+            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 21, value)
             .asInstanceOf[Iterator[NodeType]]
         }
       case _ =>
@@ -441,7 +441,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
     case init: flatgraph.misc.InitNodeIterator[flatgraph.GNode @unchecked] if init.isVirgin && init.hasNext =>
       val someNode = init.next
       flatgraph.Accessors
-        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 24, value)
+        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 22, value)
         .asInstanceOf[Iterator[NodeType]]
     case _ =>
       traversal.filter { node =>
@@ -555,134 +555,6 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
       val tmp = node.lineNumberEnd; tmp.isDefined && tmp.get <= value
     }
 
-  /** Traverse to offset property */
-  def offset: Iterator[Int] =
-    traversal.flatMap(_.offset)
-
-  /** Traverse to nodes where the offset equals the given `value`
-    */
-  def offset(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && tmp.get == value
-    }
-
-  /** Traverse to nodes where the offset equals at least one of the given `values`
-    */
-  def offset(values: Int*): Iterator[NodeType] = {
-    val vset = values.toSet
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && vset.contains(tmp.get)
-    }
-  }
-
-  /** Traverse to nodes where the offset is not equal to the given `value`
-    */
-  def offsetNot(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isEmpty || tmp.get != value
-    }
-
-  /** Traverse to nodes where the offset does not equal any one of the given `values`
-    */
-  def offsetNot(values: Int*): Iterator[NodeType] = {
-    val vset = values.toSet
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isEmpty || !vset.contains(tmp.get)
-    }
-  }
-
-  /** Traverse to nodes where the offset is greater than the given `value`
-    */
-  def offsetGt(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && tmp.get > value
-    }
-
-  /** Traverse to nodes where the offset is greater than or equal the given `value`
-    */
-  def offsetGte(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && tmp.get >= value
-    }
-
-  /** Traverse to nodes where the offset is less than the given `value`
-    */
-  def offsetLt(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && tmp.get < value
-    }
-
-  /** Traverse to nodes where the offset is less than or equal the given `value`
-    */
-  def offsetLte(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offset; tmp.isDefined && tmp.get <= value
-    }
-
-  /** Traverse to offsetEnd property */
-  def offsetEnd: Iterator[Int] =
-    traversal.flatMap(_.offsetEnd)
-
-  /** Traverse to nodes where the offsetEnd equals the given `value`
-    */
-  def offsetEnd(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && tmp.get == value
-    }
-
-  /** Traverse to nodes where the offsetEnd equals at least one of the given `values`
-    */
-  def offsetEnd(values: Int*): Iterator[NodeType] = {
-    val vset = values.toSet
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && vset.contains(tmp.get)
-    }
-  }
-
-  /** Traverse to nodes where the offsetEnd is not equal to the given `value`
-    */
-  def offsetEndNot(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isEmpty || tmp.get != value
-    }
-
-  /** Traverse to nodes where the offsetEnd does not equal any one of the given `values`
-    */
-  def offsetEndNot(values: Int*): Iterator[NodeType] = {
-    val vset = values.toSet
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isEmpty || !vset.contains(tmp.get)
-    }
-  }
-
-  /** Traverse to nodes where the offsetEnd is greater than the given `value`
-    */
-  def offsetEndGt(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && tmp.get > value
-    }
-
-  /** Traverse to nodes where the offsetEnd is greater than or equal the given `value`
-    */
-  def offsetEndGte(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && tmp.get >= value
-    }
-
-  /** Traverse to nodes where the offsetEnd is less than the given `value`
-    */
-  def offsetEndLt(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && tmp.get < value
-    }
-
-  /** Traverse to nodes where the offsetEnd is less than or equal the given `value`
-    */
-  def offsetEndLte(value: Int): Iterator[NodeType] =
-    traversal.filter { node =>
-      val tmp = node.offsetEnd; tmp.isDefined && tmp.get <= value
-    }
-
   /** Traverse to signature property */
   def signature: Iterator[String] =
     traversal.map(_.signature)
@@ -710,7 +582,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
     case init: flatgraph.misc.InitNodeIterator[flatgraph.GNode @unchecked] if init.isVirgin && init.hasNext =>
       val someNode = init.next
       flatgraph.Accessors
-        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 51, value)
+        .getWithInverseIndex(someNode.graph, someNode.nodeKind, 46, value)
         .asInstanceOf[Iterator[NodeType]]
     case _ => traversal.filter { _.signature == value }
   }
@@ -724,7 +596,7 @@ final class TraversalMethodBase[NodeType <: nodes.MethodBase](val traversal: Ite
         val someNode = init.next
         values.iterator.flatMap { value =>
           flatgraph.Accessors
-            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 51, value)
+            .getWithInverseIndex(someNode.graph, someNode.nodeKind, 46, value)
             .asInstanceOf[Iterator[NodeType]]
         }
       case _ =>
