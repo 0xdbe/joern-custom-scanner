@@ -5,32 +5,36 @@ import scala.collection.immutable.{IndexedSeq, ArraySeq}
 import scala.collection.mutable
 
 object NewMynodetype {
-  def apply(): NewMynodetype = new NewMynodetype
+  def apply(): NewMynodetype                         = new NewMynodetype
   private val outNeighbors: Map[String, Set[String]] = Map()
-  private val inNeighbors: Map[String, Set[String]] = Map()
+  private val inNeighbors: Map[String, Set[String]]  = Map()
 
   object InsertionHelpers {
-      object NewNodeInserter_Mynodetype_myproperty extends flatgraph.NewNodePropertyInsertionHelper {
-  override def insertNewNodeProperties(newNodes: mutable.ArrayBuffer[flatgraph.DNode], dst: AnyRef, offsets: Array[Int]): Unit = {
-     if(newNodes.isEmpty) return
-     val dstCast = dst.asInstanceOf[Array[String]]
-     val seq = newNodes.head.storedRef.get.seq()
-     var offset = offsets(seq)
-     var idx = 0
-     while(idx < newNodes.length){
-        val nn = newNodes(idx)
-        nn match {
-          case generated: NewMynodetype =>
-            dstCast(offset) = generated.myproperty
-            offset += 1
-          case _ =>
+    object NewNodeInserter_Mynodetype_myproperty extends flatgraph.NewNodePropertyInsertionHelper {
+      override def insertNewNodeProperties(
+        newNodes: mutable.ArrayBuffer[flatgraph.DNode],
+        dst: AnyRef,
+        offsets: Array[Int]
+      ): Unit = {
+        if (newNodes.isEmpty) return
+        val dstCast = dst.asInstanceOf[Array[String]]
+        val seq     = newNodes.head.storedRef.get.seq()
+        var offset  = offsets(seq)
+        var idx     = 0
+        while (idx < newNodes.length) {
+          val nn = newNodes(idx)
+          nn match {
+            case generated: NewMynodetype =>
+              dstCast(offset) = generated.myproperty
+              offset += 1
+            case _ =>
+          }
+          assert(seq + idx == nn.storedRef.get.seq(), "internal consistency check")
+          idx += 1
+          offsets(idx + seq) = offset
         }
-        assert(seq + idx == nn.storedRef.get.seq(), "internal consistency check")
-        idx += 1
-        offsets(idx + seq) = offset
-     }
-  }
-}
+      }
+    }
   }
 }
 
@@ -45,11 +49,11 @@ class NewMynodetype extends NewNode(nodeKind = 31) with MynodetypeBase {
     NewMynodetype.inNeighbors.getOrElse(edgeLabel, Set.empty).contains(n.label)
   }
 
-  var myproperty: String = "": String
-  def myproperty(value: String): this.type = {this.myproperty = value; this }
+  var myproperty: String                   = "": String
+  def myproperty(value: String): this.type = { this.myproperty = value; this }
   override def countAndVisitProperties(interface: flatgraph.BatchedUpdateInterface): Unit = {
-interface.countProperty(this, 37, 1)
-}
+    interface.countProperty(this, 37, 1)
+  }
 
   override def copy: this.type = {
     val newInstance = new NewMynodetype
@@ -69,7 +73,7 @@ interface.countProperty(this, 37, 1)
       case _ => null
     }
 
-  override def productPrefix = "NewMynodetype"
-  override def productArity = 1
+  override def productPrefix                = "NewMynodetype"
+  override def productArity                 = 1
   override def canEqual(that: Any): Boolean = that != null && that.isInstanceOf[NewMynodetype]
 }
