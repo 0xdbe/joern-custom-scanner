@@ -14,8 +14,7 @@ object ReplMain extends BridgeBase {
     RunBeforeCode.forInteractiveShell ++ Seq(s"import _root_.${getClass.getPackageName}.*")
   }
 
-  override protected def promptStr  = "joern-sample-ext"
-  override protected def greeting   = "Welcome to the wonderful world of this sample joern extension!"
-  override protected def onExitCode = """println("goodbye!")"""
-  override def applicationName      = "joern-sample-ext"
+  override protected def promptStr = "joern-sample-ext"
+  override protected def greeting  = "Welcome to the wonderful world of this sample joern extension!"
+  override def applicationName     = "joern-sample-ext"
 }
