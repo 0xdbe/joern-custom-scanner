@@ -16,6 +16,7 @@ dependsOn(domainClasses)
 libraryDependencies ++= Seq(
   "com.github.scopt"        %% "scopt"             % Versions.scopt,
   "org.apache.logging.log4j" % "log4j-slf4j2-impl" % Versions.log4j     % Optional,
+  "io.joern"                %% "console"           % Versions.joern,
   "io.joern"                %% "x2cpg"             % Versions.joern,
   "io.joern"                %% "javasrc2cpg"       % Versions.joern,
   "io.joern"                %% "joern-cli"         % Versions.joern,
@@ -54,5 +55,6 @@ ThisBuild / resolvers ++= Seq(
   "Gradle Releases" at "https://repo.gradle.org/gradle/libs-releases/"
 )
 
+Compile / mainClass := Some("org.codeminers.standalone.Main")
 Compile / doc / sources                := Seq.empty
 Compile / packageDoc / publishArtifact := false

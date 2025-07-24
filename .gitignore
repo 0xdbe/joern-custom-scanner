@@ -4,3 +4,7 @@ target/
 /.bsp
 /joern-inst
 /workspace
+.bloop/
+.direnv/
+.metals/
+.vscode/

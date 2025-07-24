@@ -10,6 +10,11 @@ import flatgraph.DiffGraphBuilder
 
 import scala.util.{Failure, Success}
 
+import io.joern.console.QueryBundle
+import io.joern.console.scan.ScanPass
+import org.codeminers.standalone.DangerousFunctions
+
+
 /** Example program that makes use of Joern as a library */
 object Main {
 
@@ -34,6 +39,12 @@ object Main {
         println("Running custom queries")
         cpg.mynodetype.foreach(println)
         cpg.mynodetype.myCustomStep.l
+        // Appel de la query DangerousFunctions
+        println("exec:")
+        cpg.method("java.lang.Runtime.exec").foreach(println)
+        println("Load QueryBundle:")
+        val queries = List(DangerousFunctions.execUsed())
+        new ScanPass(cpg, queries).createAndApply()
       case Failure(exception) =>
         println("[FAILED]")
         println(exception)
