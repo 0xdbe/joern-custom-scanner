@@ -12,8 +12,8 @@ import scala.util.{Failure, Success}
 
 import io.joern.console.QueryBundle
 import io.joern.console.scan.ScanPass
+import io.joern.console.scan.outputFindings
 import org.codeminers.standalone.DangerousFunctions
-
 
 /** Example program that makes use of Joern as a library */
 object Main {
@@ -34,17 +34,18 @@ object Main {
         println("=====================")
         cpg.method.name.foreach(println)
         println("=====================")
-        println("Running a custom pass to add some custom nodes")
-        new MyPass(cpg).createAndApply()
-        println("Running custom queries")
-        cpg.mynodetype.foreach(println)
-        cpg.mynodetype.myCustomStep.l
+        // println("Running a custom pass to add some custom nodes")
+        // new MyPass(cpg).createAndApply()
+        // println("Running custom queries")
+        // cpg.mynodetype.foreach(println)
+        // cpg.mynodetype.myCustomStep.l
         // Appel de la query DangerousFunctions
         println("exec:")
         cpg.method("java.lang.Runtime.exec").foreach(println)
         println("Load QueryBundle:")
         val queries = List(DangerousFunctions.execUsed())
         new ScanPass(cpg, queries).createAndApply()
+        outputFindings(cpg)
       case Failure(exception) =>
         println("[FAILED]")
         println(exception)

@@ -21,7 +21,18 @@ object DangerousFunctions extends QueryBundle {
         |""".stripMargin,
       score = 8,
       withStrRep({ cpg =>
-        cpg.method("java.lang.Runtime.exec").callIn
+
+      println("=====================")
+        println("execUsed:")
+
+        cpg.call
+          .name("exec").foreach(println)
+
+        cpg.call
+          .name("exec") 
+
+        //cpg.method("java.lang.Runtime.exec").foreach(println)
+        //cpg.method("java.lang.Runtime.exec").callIn
       }),
       tags = List("badfn", "default")
     )
